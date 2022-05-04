@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client",
+    "e2e"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace myFC-client build",
+    "dev": "yarn workspace myFC-server dev",
+    "dev:debug": "yarn workspace myFC-server dev:debug",
+    "heroku-postbuild": "yarn workspace myFC-client build",
+    "start": "yarn workspace myFC-server start",
+    "dev:cypress": "yarn workspace myFC-server dev:e2e",
+    "e2e:open": "yarn workspace myFC-e2e e2e:open",
+    "e2e:run": "yarn workspace myFC-e2e e2e:run"
+  },
+  "engines": {
+    "node": "^14.19"
+  }
+}

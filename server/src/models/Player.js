@@ -8,9 +8,10 @@ class Player extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "position", "teamId"],
+      required: ["firstName", "lastName", "position", "teamId"],
       properties: {
-        name: { type: "string" },
+        firstName: { type: "string" },
+        lastName: { type: "string" },
         position: { type: "string" },
         teamId: { type: ["string", "integer"] },
       },

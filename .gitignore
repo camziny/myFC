@@ -23,4 +23,5 @@ Desktop.ini
 # Coveralls
 **/coverage
 
+#api keys
 .env

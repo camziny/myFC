@@ -1,7 +1,7 @@
 import express from "express";
 import objection from "objection";
-import { Player } from "../../../models";
-import PlayerSerializer from "../../../serializers/PlayerSerializer";
+import { Player } from "../../../models/index.js";
+import PlayerSerializer from "../../../serializers/PlayerSerializer.js";
 
 const playersRouter = new express.Router();
 

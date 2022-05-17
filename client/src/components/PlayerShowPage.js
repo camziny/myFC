@@ -33,6 +33,7 @@ const PlayerShowPage = (props) => {
   return (
     <div className="callout">
       <h1>
+        Players:
         {player.firstName} {player.lastName}
       </h1>
       {teamTileComponents}

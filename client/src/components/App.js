@@ -7,6 +7,8 @@ import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
+import TeamsShowPage from "./TeamsShowPage";
+import PlayerShowPage from "./PlayerShowPage";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -31,7 +33,7 @@ const App = (props) => {
           <h2>myFC</h2>
         </Route>
         <Route exact path="/teams" component={TeamsShowPage} />
-        <Route exact path="/players" component={PlayersShowPage} />
+        <Route exact path="/players" component={PlayerShowPage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>

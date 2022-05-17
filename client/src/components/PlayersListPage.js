@@ -25,7 +25,7 @@ const PlayersListPage = () => {
   }, []);
 
   const playerTileComponents = players.map((playerObject) => {
-    return <PlayerTile key={platerObject.id} {...playerObject} />;
+    return <PlayerTile key={playerObject.id} {...playerObject} />;
   });
 
   return (

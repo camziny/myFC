@@ -1,4 +1,4 @@
-import PlayerSerializer from "./PlayerSerializer";
+import PlayerSerializer from "./PlayerSerializer.js";
 
 class TeamSerializer {
   static async getSummary(team) {

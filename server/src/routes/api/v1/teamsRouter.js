@@ -1,8 +1,8 @@
 import express from "express";
 import objection from "objection";
+import { Team } from "../../../models/index.js";
 import TeamSerializer from "../../../serializers/TeamSerializer.js";
 
-import { Team } from "../../../models/index.js";
 
 const teamsRouter = new express.Router();
 

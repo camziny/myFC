@@ -1,18 +1,19 @@
 import express from "express";
 import objection from "objection";
 import { Team } from "../../../models/index.js";
-import TeamSerializer from "../../../serializers/TeamSerializer.js";
+import RapidApi from "../../../apiClient/RapidApi.js";
 
 
 const teamsRouter = new express.Router();
 
 teamsRouter.get("/", async (req, res) => {
   try {
-    const teams = await Team.query();
-    const serializedTeams = await Promise.all(
-      teams.map(async (team) => await TeamSerializer.getSummary(team))
-    );
-    return res.status(200).json({ teams: serializedTeams });
+    const rapidApiResponse = await RapidApi.getTeams()
+    const teamsData = JSON.parse(rapidApiResponse)
+    return res
+      .set({ "Content-Type": "application/json" })
+      .status(200)
+      .json(teamsData)
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
@@ -20,11 +21,15 @@ teamsRouter.get("/", async (req, res) => {
 
 teamsRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
-  try {
-    const team = await Team.query().findById(id);
-    const serializedTeam = await serializedTeam.getDetails(team);
-    return res.status(200).json({ team: serializedTeam });
+  try {;
+    const players = await RapidApi.getPlayers({ teamId: id })
+    const playersData = JSON.parse(players)
+    return res
+    .set({ "Content-Type": "application/json" })
+    .status(200)
+    .json(playersData.response);
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });

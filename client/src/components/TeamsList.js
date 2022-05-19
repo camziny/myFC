@@ -14,7 +14,8 @@ const TeamsList = () => {
         throw error;
       }
       const parsedResponse = await response.json();
-      setTeams(parsedResponse.teams);
+     console.log(parsedResponse.response)
+      setTeams(parsedResponse.response);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
     }
@@ -25,13 +26,22 @@ const TeamsList = () => {
   }, []);
 
   const teamTileComponents = teams.map((teamObject) => {
-    return <TeamTile key={teamObject.id} {...teamObject} />;
+    return (
+      <TeamTile
+        key={teamObject.team.id}
+        id={teamObject.team.id}
+        name={teamObject.team.name}
+        logo={teamObject.team.logo}
+      />
+    );
   });
 
   return (
-    <div className="callout">
-      Featured Teams
+    <div className="teamsListBackground">
+    <div className="teamsList">
+      <div className="teamsListHeader">Premier League Teams</div>
       {teamTileComponents}
+    </div>
     </div>
   );
 };

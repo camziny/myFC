@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { useParams } from "react-router-dom";
 import PlayerTile from "./PlayerTile.js";
 
 import ErrorList from "./layout/ErrorList.js";
@@ -7,21 +7,21 @@ import ErrorList from "./layout/ErrorList.js";
 import translateServerErrors from "../services/translateServerErrors.js";
 
 const TeamsShowPage = (props) => {
-  const [team, setTeam] = useState({ players: [] });
+  const { id } = useParams()
+  const [team, setTeam] = useState([]);
   const [errors, setErrors] = useState([]);
-
-  const id = props.match.params.id;
+  const [pageNumber, setPageNumber] = 1
 
   const getTeam = async () => {
     try {
-      const response = await fetch(`/api/v1/teams/${id}`);
+      const response = await fetch(`/api/v1/teams/${id}?pageNumber=${pageNumber}`);
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
       const teamData = await response.json();
-      setTeam(teamData.team);
+      setTeam(teamData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
@@ -31,14 +31,24 @@ const TeamsShowPage = (props) => {
     getTeam();
   }, []);
 
-  const playerTileComponents = team.players.map((teamObject) => {
-    return <PlayerTile key={teamObject.id} {...teamObject} />;
+  const playerTileComponents = team.map((playerObject) => {
+    return <PlayerTile 
+    key={playerObject.id}
+    name={playerObject.player.name}
+    nationality={playerObject.player.nationality}
+    position={playerObject.statistics[0].games.position}
+    photo={playerObject.player.photo}
+    goals={playerObject.statistics[0].goals.total}
+    assists={playerObject.statistics[0].goals.assists}
+    saves={playerObject.statistics[0].goals.saves}
+    conceded={playerObject.statistics[0].goals.conceded}
+    yellowCards={playerObject.statistics[0].cards.yellow}
+    redCards={playerObject.statistics[0].cards.red}
+    />;
   });
 
   return (
-    <div className="callout">
-      <h1>Team Name</h1>
-      <h2>Players</h2>
+    <div className="playerList">
       {playerTileComponents}
     </div>
   );

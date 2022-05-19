@@ -4,6 +4,9 @@
 // place global css here
 *,
 *::before,
+.body {
+  background-color: #7F9183;
+}
 *::after {
   box-sizing: border-box;
 }
@@ -11,4 +14,126 @@
 :root {
   -moz-tab-size: 4;
   tab-size: 4;
+}
+
+.teamsListBackground {
+  text-align: center;
+  align-items: center;
+}
+
+.teamsList {
+    display: inline-block;
+    background-color: #586F6B;
+    text-align: center;
+    color: #DDD5D0;
+    font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 16px;
+    border-color: #eee #ddd #bbb;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    margin: 10px 5px;
+    padding: 0 16px 16px 16px;
+    max-width: 500px;
+}
+
+.teamLogo {
+  background-color: #CFC0BD;
+}
+
+.callout {
+  background-color: #CFC0BD;
+}
+
+.playerTile {
+  align-items: right;
+  text-align: center;
+  background-color: #CFC0BD;
+}
+
+.teamsListHeader {
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  color: black;
+  text-align: center;
+  font-size: medium;
+  margin: 10px 5px;
+  padding: 0 16px 16px 16px;
+  background-color: #CFC0BD;
+}
+
+.teamName {
+  background-color: #CFC0BD;
+  margin-top: 4px;
+}
+
+.playersList {
+  align-items: center;
+  text-align: center;
+}
+
+.playersInfo {
+  display: inline-block;
+  background-color: #586F6B;
+  text-align: center;
+  color: #DDD5D0;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 16px;
+  border-color: #eee #ddd #bbb;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  margin: 10px 5px;
+  padding: 0 16px 16px 16px;
+  max-width: 500px;
+}
+
+.playerStatistics {
+  text-align: center;
+  background-color: #586F6B;
+}
+
+.playerName {
+  font-size: 18px;
+  text-decoration: underline;
+  background-color: #586F6B;
+  margin-bottom: 2%;
+  margin-top: 1%;
+}
+
+.playerNationality {
+  background-color: #586F6B;
+}
+
+.playerPosition {
+  background-color: #586F6B;
+}
+
+.playerGoals {
+  background-color: #586F6B;
+}
+
+.playerAssists {
+  background-color: #586F6B;
+}
+
+.playerSaves {
+  background-color: #586F6B;
+}
+
+.playerConceded {
+  background-color: #586F6B;
+}
+
+.playerYellowCards {
+  background-color: #586F6B;
+}
+
+.playerRedCards {
+  background-color: #586F6B;
 }

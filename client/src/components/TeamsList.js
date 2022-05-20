@@ -14,7 +14,6 @@ const TeamsList = () => {
         throw error;
       }
       const parsedResponse = await response.json();
-     console.log(parsedResponse.response)
       setTeams(parsedResponse.response);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
@@ -38,10 +37,10 @@ const TeamsList = () => {
 
   return (
     <div className="teamsListBackground">
-    <div className="teamsList">
-      <div className="teamsListHeader">Premier League Teams</div>
-      {teamTileComponents}
-    </div>
+      <div className="teamsList">
+        <div className="teamsListHeader">Premier League Teams</div>
+        {teamTileComponents}
+      </div>
     </div>
   );
 };

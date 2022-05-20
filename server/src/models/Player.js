@@ -19,9 +19,17 @@ class Player extends Model {
   }
 
   static get relationMappings() {
-    const { Team } = require("./index.js");
+    const { Team, Position } = require("./index.js");
 
     return {
+      squads: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Position,
+        join: {
+          from: "players.positionId",
+          to: "positions.id",
+        },
+      },
       team: {
         relation: Model.BelongsToOneRelation,
         modelClass: Team,

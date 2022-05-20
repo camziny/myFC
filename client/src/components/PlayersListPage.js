@@ -14,7 +14,7 @@ const PlayersListPage = () => {
         throw error;
       }
       const parsedResponse = await response.json();
-      console.log(parsedResponse.response)
+      console.log(parsedResponse.response);
       setPlayers(parsedResponse.response);
     } catch (err) {
       console.error(`Error in fetch: ${err.message}`);
@@ -26,16 +26,19 @@ const PlayersListPage = () => {
   }, []);
 
   const playerTileComponents = players.map((playerObject) => {
-    return <PlayerTile 
-    key={playerObject.player.id} 
-    id={playerObject.player.id}
-    name={playerObject.player.name}
-    team={playerObject.statistics.team}
-    position={playerObject.statistics.games}
-    nationality={playerObject.player.nationality}
-    photo={playerObject.player.photo}
-    teamId={playerObject.statistics.team}
-    teamName={playerObject.statistics.team} />;
+    return (
+      <PlayerTile
+        key={playerObject.player.id}
+        id={playerObject.player.id}
+        name={playerObject.player.name}
+        team={playerObject.statistics.team}
+        position={playerObject.statistics.games}
+        nationality={playerObject.player.nationality}
+        photo={playerObject.player.photo}
+        teamId={playerObject.statistics.team}
+        teamName={playerObject.statistics.team}
+      />
+    );
   });
 
   return (

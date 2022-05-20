@@ -19,5 +19,8 @@
   "engines": {
     "node": "^14.19",
     "yarn": "^1.22.17"
+  },
+  "dependencies": {
+    "react-paginate": "^8.1.3"
   }
 }

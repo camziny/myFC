@@ -1,8 +1,8 @@
 import got from "got";
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
-const rapidApiKey = process.env.X_RapidAPI_Key
+const rapidApiKey = process.env.X_RapidAPI_Key;
 
 class RapidApi {
   static async getTeams() {

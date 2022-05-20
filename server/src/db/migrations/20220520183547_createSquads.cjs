@@ -6,12 +6,11 @@
  * @param {Knex} knex
  */
 exports.up = async (knex) => {
-  return knex.schema.createTable("players", (table) => {
+  return knex.schema.createTable("squads", (table) => {
     table.bigIncrements("id");
     table.string("name").notNullable();
-    table.string("position").notNullable();
-    table.bigInteger("teamId").unsigned().index().references("teams.id").notNullable();
-    table.bigInteger("positionId").unsigned().index().references("positions.id").notNullable();
+    table.string("players").notNullable();
+    table.bigInteger("squadId").unsigned().index().references("squads.id").notNullable()
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());
   });
@@ -21,5 +20,5 @@ exports.up = async (knex) => {
  * @param {Knex} knex
  */
 exports.down = (knex) => {
-  return knex.schema.dropTableIfExists("players");
+  return knex.schema.dropTableIfExists("squads");
 };

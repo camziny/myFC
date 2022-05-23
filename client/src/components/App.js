@@ -10,34 +10,43 @@ import TopBar from "./layout/TopBar";
 import TeamsList from "./TeamsList";
 import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
+import Home from "./Home.js";
+import SquadsList from "./SquadsList.js";
+import SquadShowPage from "./SquadShowPage.js";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const fetchCurrentUser = async () => {
     try {
-      const user = await getCurrentUser()
-      setCurrentUser(user)
-    } catch(err) {
-      setCurrentUser(null)
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    } catch (err) {
+      setCurrentUser(null);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchCurrentUser()
-  }, [])
+    fetchCurrentUser();
+  }, []);
 
   return (
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/">
-          <h2>myFC</h2>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/squads">
+          <SquadsList user={currentUser} />
         </Route>
+        <Route exact path="/users/new" component={RegistrationForm} />
+        <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />
         <Route exact path="/players" component={PlayersListPage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <Route exact path="/squads/:id">
+          <SquadShowPage user={currentUser} />
+        </Route>
       </Switch>
     </Router>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import SquadTile from "./SquadTile";
-import NewSquadForm from "./NewSquadForm";
+import SquadTile from "./SquadTile.js";
+import NewSquadForm from "./NewSquadForm.js";
 
 const SquadsList = (props) => {
   const [squads, setSquads] = useState([]);
@@ -29,18 +29,20 @@ const SquadsList = (props) => {
   }, []);
 
   const squadTileComponents = squads.map((squadObject) => {
-    return <SquadTile key={squadObject.id} {...squadObject} />;
+    return <SquadTile key={`squadTile-${squadObject.id}`} {...squadObject} />;
   });
 
-  const squadForm = props.user ? <NewSquadForm addNewSquad={addNewSquad} /> : null;
+  const squadForm = <NewSquadForm addNewSquad={addNewSquad} />;
 
   return (
-    <div className="squadsListForm">
+    <div>
+    <div className="callout secondary">
       {squadForm}
       <div className="squadList">
         Squads:
         {squadTileComponents}
       </div>
+    </div>
     </div>
   );
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SignOutButton from "../authentication/SignOutButton";
+import NewSquadForm from "../NewSquadForm";
+import TeamsList from "../TeamsList";
 
 const TopBar = ({ user }) => {
   const unauthenticatedListItems = [
@@ -13,6 +15,18 @@ const TopBar = ({ user }) => {
       </Link>
     </li>,
   ];
+
+  const squadCreate = [
+    <li key="create-squad">
+      <NewSquadForm />
+    </li>
+  ]
+
+  const teamList = [
+    <li key="create-squad">
+      <TeamsList />
+    </li>
+  ]
 
   const authenticatedListItems = [
     <li key="sign-out">
@@ -27,6 +41,8 @@ const TopBar = ({ user }) => {
           <li className="menu-text">App</li>
           <li>
             <Link to="/">Home</Link>
+            <Link to="/squads">Create Squad</Link>
+            <Link to="/teams">Premier League Teams</Link>
           </li>
         </ul>
       </div>

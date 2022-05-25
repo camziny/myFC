@@ -5,7 +5,7 @@
 *,
 *::before,
 .body {
-  background-color: #7F9183;
+  background-color: white;
 }
 *::after {
   box-sizing: border-box;
@@ -19,6 +19,27 @@
 .teamsListBackground {
   text-align: center;
   align-items: center;
+}
+
+.homeHeader {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 160px;
+  text-align: center;
+  font-weight: 300;
+}
+
+.squadList {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 80px;
+  text-align: center;
+  font-weight: 300;
+}
+
+.squad-form-header {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 40px;
+  text-align: center;
+  font-weight: 300;
 }
 
 .teamsList {

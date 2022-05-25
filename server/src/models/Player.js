@@ -8,34 +8,23 @@ class Player extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["firstName", "lastName", "position", "teamId"],
+      required: ["name"],
       properties: {
-        firstName: { type: "string" },
-        lastName: { type: "string" },
-        position: { type: "string" },
-        teamId: { type: ["string", "integer"] },
+        name: { type: "string" },
       },
     };
   }
 
   static get relationMappings() {
-    const { Team, Position } = require("./index.js");
+    const { Assignment } = require("./index.js");
 
     return {
-      squads: {
+      assignments: {
         relation: Model.ManyToManyRelation,
-        modelClass: Position,
+        modelClass: Assignment,
         join: {
-          from: "players.positionId",
-          to: "positions.id",
-        },
-      },
-      team: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Team,
-        join: {
-          from: "players.teamId",
-          to: "teams.id",
+          from: "players.assignmentId",
+          to: "assignments.id",
         },
       },
     };

@@ -13,6 +13,6 @@ rootRouter.use("/api/v1/teams", teamsRouter)
 rootRouter.use("/api/v1/players", playersRouter)
 rootRouter.use("/api/v1/user-sessions", userSessionsRouter);
 rootRouter.use("/api/v1/users", usersRouter); 
-rootRouter.use("/api/v1/squads")
+rootRouter.use("/api/v1/squads", squadsRouter) 
 
 export default rootRouter;

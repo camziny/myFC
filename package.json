@@ -21,6 +21,7 @@
     "yarn": "^1.22.17"
   },
   "dependencies": {
+    "react-google-charts": "^4.0.0",
     "react-paginate": "^8.1.3"
   }
 }

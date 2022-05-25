@@ -9,7 +9,6 @@ exports.up = async (knex) => {
   return knex.schema.createTable("teams", (table) => {
     table.bigIncrements("id");
     table.string("name").notNullable();
-    table.string("city").notNullable();
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());
   });

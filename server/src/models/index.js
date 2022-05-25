@@ -3,6 +3,6 @@ const User = require("./User.js")
 const Player = require("./Player.js")
 const Team = require("./Team.js")
 const Squad = require("./Squad.js")
-const Position = require("./Position.js")
+const Assignment = require("./Assignment.js")
 
-module.exports = {User, Player, Team, Squad, Position};
+module.exports = {User, Player, Team, Squad, Assignment};

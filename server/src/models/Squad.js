@@ -7,16 +7,17 @@ class Squad extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "players"],
+      required: ["name", "assignments"],
       properties: {
         name: { type: "string", minLength: 1 },
-        players: { type: "string" },
+        assignments: { type: "string" },
+        image: { type: "string" },
       },
     };
   }
 
   static get relationMappings() {
-    const { Position, User } = require("./index.js");
+    const { Assignment } = require("./index.js");
     return {
       positions: {
         relation: Model.HasManyRelation,
@@ -24,14 +25,6 @@ class Squad extends Model {
         join: {
           from: "squads.id",
           to: "positions.squadId",
-        },
-      },
-      user: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: "squads.userId",
-          to: "users.id",
         },
       },
     };

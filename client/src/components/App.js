@@ -10,6 +10,7 @@ import TopBar from "./layout/TopBar";
 import TeamsList from "./TeamsList";
 import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
+import SquadsList from "./SquadsList";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -31,8 +32,9 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/">
-          <h2>myFC</h2>
+          <div className="homeHeader">myFC</div>
         </Route>
+        <Route exact path="/squads" component={SquadsList} />
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />
         <Route exact path="/players" component={PlayersListPage} />

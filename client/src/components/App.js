@@ -33,12 +33,10 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/squads">
-          <SquadsList user={currentUser} />
+        <Route exact path="/">
+          <div className="homeHeader">myFC</div>
         </Route>
-        <Route exact path="/users/new" component={RegistrationForm} />
-        <Route exact path="/user-sessions/new" component={SignInForm} />
+        <Route exact path="/squads" component={SquadsList} />
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />
         <Route exact path="/players" component={PlayersListPage} />

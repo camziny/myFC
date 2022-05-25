@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Chart } from "react-google-charts";
 
 const PlayerTile = ({
   id,
@@ -31,11 +32,14 @@ const PlayerTile = ({
               <div className="playerYellowCards">Yellow Cards: {yellowCards}</div>
               <div className="playerRedCards">Red Cards: {redCards}</div>
             </ul>
+            <div></div>
           </div>
         </div>
       </Link>
     </div>
   );
 };
+
+// };
 
 export default PlayerTile;

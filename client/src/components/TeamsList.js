@@ -35,6 +35,7 @@ const TeamsList = () => {
     );
   });
 
+
   return (
     <div className="teamsListBackground">
       <div className="teamsList">

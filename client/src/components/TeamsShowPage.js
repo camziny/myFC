@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import PlayerTile from "./PlayerTile.js";
 import ReactPaginate from "react-paginate";
 
+
 import ErrorList from "./layout/ErrorList.js";
 
 import translateServerErrors from "../services/translateServerErrors.js";
@@ -16,7 +17,6 @@ const TeamsShowPage = (props) => {
   const getTeam = async () => {
     try {
       const response = await fetch(`/api/v1/teams/${id}?pageNumber=${pageNumber}`);
-      console.log(pageNumber)
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
@@ -35,7 +35,7 @@ const TeamsShowPage = (props) => {
 
   const changePage = ({ selected }) => {
     setPageNumber(selected);
-    getTeam(selected)
+    getTeam(selected);
   };
 
   const playerTileComponents = team.map((playerObject) => {
@@ -52,6 +52,7 @@ const TeamsShowPage = (props) => {
         conceded={playerObject.statistics[0].goals.conceded}
         yellowCards={playerObject.statistics[0].cards.yellow}
         redCards={playerObject.statistics[0].cards.red}
+        playerChart={[playerObject.statistics[0].goals.total, playerObject.statistics[0].goals.assists]}
       />
     );
   });

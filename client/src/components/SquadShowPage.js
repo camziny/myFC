@@ -9,7 +9,8 @@ const SquadShowPage = (props) => {
   const { id } = useParams();
   const [squad, setSquad] = useState({
     name: "",
-    positions: [],
+    image: {},
+    assignments: []
   });
   const [errors, setErrors] = useState({});
 
@@ -17,9 +18,7 @@ const SquadShowPage = (props) => {
     getSquad();
   }, []);
 
-  const addNewPosition = (position) => {
-    setSquad({ ...squad, positions: [...squad.positions, position] });
-  };
+
 
   const getSquad = async () => {
     try {

@@ -14,6 +14,7 @@ const SquadsList = (props) => {
         throw error;
       }
       const parsedResponse = await response.json();
+      console.log(parsedResponse.squads)
       setSquads(parsedResponse.squads);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);

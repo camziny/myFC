@@ -10,9 +10,9 @@ import TopBar from "./layout/TopBar";
 import TeamsList from "./TeamsList";
 import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
-import Home from "./Home.js";
 import SquadsList from "./SquadsList.js";
-import SquadShowPage from "./SquadShowPage.js";
+import SquadShowPage from "./SquadShowPage.js"
+import { Link } from "react-router-dom"
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,7 +34,13 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <Route exact path="/">
-          <div className="homeHeader">myFC</div>
+          <div className="homeHeader">
+          <div className="icon text-center">
+          <Link to="/squads">
+            <img className="home-backgroundImage"src="https://cdn.freelogodesign.org/files/31506640979849029e138aa454d48f51/thumb/logo_200x200.png?v=0" alt=""/>
+          </Link>
+          </div>
+          </div>
         </Route>
         <Route exact path="/squads" component={SquadsList} />
         <Route exact path="/teams" component={TeamsList} />

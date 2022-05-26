@@ -5,7 +5,6 @@ import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Squad } from "../../../models/index.js";
 import squadAssignmentsRouter from "./squadAssignmentsRouter.js";
 import uploadImage from "../../../services/UploadImage.js";
-import SquadSerializer from "../../../serializers/SquadSerializer.js";
 
 
 const squadsRouter = new express.Router({ mergeParams: true });
@@ -15,8 +14,7 @@ squadsRouter.use("/:squadId/positions", squadAssignmentsRouter);
 squadsRouter.get("/", async (req, res) => {
   try {
     const squads = await Squad.query();
-    const serializedSquads = squads.map(squad => SquadSerializer.getSummary(squad))
-    return res.status(200).json({ squads: serializedSquads });
+    return res.status(200).json({ squads: squads });
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
@@ -26,8 +24,7 @@ squadsRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const squad = await Squad.query().findById(id);
-    const serializedSquad = await SquadSerializer.getSquadSummaryWithAssignments(squad)
-    return res.status(200).json({ squad: serializedSquad });
+    return res.status(200).json({ squad: squad });
   } catch (error) {
     return res.status(500).json({ errors: error });
   }

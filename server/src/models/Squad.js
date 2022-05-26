@@ -10,8 +10,8 @@ class Squad extends Model {
       required: ["name", "assignments"],
       properties: {
         name: { type: "string", minLength: 1 },
-        assignments: { type: "string" },
         image: { type: "string" },
+        assignments: { type: "string" },
       },
     };
   }

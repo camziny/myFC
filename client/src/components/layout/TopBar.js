@@ -37,9 +37,9 @@ const TopBar = ({ user }) => {
   return (
     <div className="top-bar">
       <div className="top-bar-left">
-        <ul className="menu">
-          <li className="menu-text">App</li>
-          <li>
+        <ul className="menu align-left">
+          <li className="menu-text"></li>
+          <li className="menu">
             <Link to="/">Home</Link>
             <Link to="/squads">Create Squad</Link>
             <Link to="/teams">Premier League Teams</Link>

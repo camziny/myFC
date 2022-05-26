@@ -7,11 +7,11 @@ class Squad extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "assignments"],
+      required: ["name"],
       properties: {
         name: { type: "string", minLength: 1 },
-        assignments: { type: "string" },
         image: { type: "string" },
+        
       },
     };
   }
@@ -19,12 +19,12 @@ class Squad extends Model {
   static get relationMappings() {
     const { Assignment } = require("./index.js");
     return {
-      positions: {
+      assignments: {
         relation: Model.HasManyRelation,
-        modelClass: Position,
+        modelClass: Assignment,
         join: {
           from: "squads.id",
-          to: "positions.squadId",
+          to: "assignments.squadId",
         },
       },
     };

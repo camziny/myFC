@@ -18,7 +18,7 @@ class SquadSerializer {
             serializedSquad[attribute] = squad[attribute]
         }
 
-        const squadDetails = await squad.$relatedQuery("squadDetails")
+        const squadDetails = await squad.$relatedQuery("assignments")
         const serializedSquadDetails = await Promise.all(
             squadDetails.map(async (squadDetail) => await SquadAssignmentSerializer.getSummary(squadDetail))
         )

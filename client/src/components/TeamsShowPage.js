@@ -39,9 +39,11 @@ const TeamsShowPage = (props) => {
   };
 
   const playerTileComponents = team.map((playerObject) => {
+    console.log(playerObject.player.id, playerObject.player.name)
     return (
       <PlayerTile
-        key={playerObject.id}
+        key={playerObject.player.id}
+        id={playerObject.player.id}
         name={playerObject.player.name}
         nationality={playerObject.player.nationality}
         position={playerObject.statistics[0].games.position}
@@ -56,11 +58,16 @@ const TeamsShowPage = (props) => {
       />
     );
   });
+  
+  
+
 
   return (
-    <div className="playerList">
+    <div>
       {playerTileComponents}
+      <div className="pagination-section">      
       <ReactPaginate
+        className="paginationButtons"
         breakLabel="..."
         nextLabel="next >"
         onPageChange={changePage}
@@ -69,6 +76,7 @@ const TeamsShowPage = (props) => {
         previousLabel="< previous"
         renderOnZeroPageCount={null}
       />
+      </div>
     </div>
   );
 };

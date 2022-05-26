@@ -14,6 +14,7 @@ const SquadsList = (props) => {
         throw error;
       }
       const parsedResponse = await response.json();
+      console.log(parsedResponse.squads)
       setSquads(parsedResponse.squads);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -29,8 +30,15 @@ const SquadsList = (props) => {
   }, []);
 
   const squadTileComponents = squads.map((squadObject) => {
-    return <SquadTile key={`squadTile-${squadObject.id}`} {...squadObject} />;
-  });
+    return ( <SquadTile 
+    key={squadObject.id}
+    id={squadObject.id}
+    name={squadObject.name}
+    image={squadObject.image}
+    assignments={squadObject.assignments}
+    />
+  )
+  })
 
   const squadForm = <NewSquadForm addNewSquad={addNewSquad} />;
 

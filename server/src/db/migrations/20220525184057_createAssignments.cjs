@@ -23,7 +23,7 @@ exports.up = async (knex) => {
         "goalKeeper",
       ])
       .notNullable();
-    table.bigInteger("playerId").unsigned().index().references("players.id").notNullable();
+    table.integer("playerId").notNullable();
     table.bigInteger("squadId").unsigned().index().references("squads.id").notNullable();
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());

@@ -39,6 +39,7 @@ const TeamsShowPage = (props) => {
   };
 
   const playerTileComponents = team.map((playerObject) => {
+    console.log(playerObject.player.id, playerObject.player.name)
     return (
       <PlayerTile
         key={playerObject.player.id}

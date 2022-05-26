@@ -48,7 +48,7 @@ const App = (props) => {
         <Route exact path="/players" component={PlayersListPage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/squads/:id">
+        <Route exact path="/squads/:id" component={SquadShowPage}>
           <SquadShowPage user={currentUser} />
         </Route>
       </Switch>

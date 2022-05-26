@@ -4,6 +4,7 @@ import PlayerTile from "./PlayerTile";
 const DropDownSelect = (props) => {
   const handleSelect = (event) => {
     props.setSelectedTeam(event.currentTarget.value);
+    props.getTeam(event.currentTarget.value)
   };
 
   const options = props.listItems.map((listItem) => {

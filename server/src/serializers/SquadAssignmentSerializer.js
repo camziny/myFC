@@ -9,7 +9,7 @@ class SquadAssignmentSerializer {
         }
         const relatedAssignment = await assignment.$relatedQuery("players")
 
-        const serializedAssignment = PlayerSerializer.getSummary(relatedAssignment)
+        const serializedAssignment = await PlayerSerializer.getSummary(relatedAssignment)
         serializedSquadAssignment.assignment = serializedAssignment
 
         return serializedSquadAssignment

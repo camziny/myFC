@@ -30,8 +30,15 @@ const SquadsList = (props) => {
   }, []);
 
   const squadTileComponents = squads.map((squadObject) => {
-    return <SquadTile key={`squadTile-${squadObject.id}`} {...squadObject} />;
-  });
+    return ( <SquadTile 
+    key={squadObject.id}
+    id={squadObject.id}
+    name={squadObject.name}
+    image={squadObject.image}
+    assignments={squadObject.assignments}
+    />
+  )
+  })
 
   const squadForm = <NewSquadForm addNewSquad={addNewSquad} />;
 

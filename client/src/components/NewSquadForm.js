@@ -64,9 +64,9 @@ const NewSquadForm = (props) => {
     fetchTeams();
   }, []);
 
-  const getTeam = async () => {
+  const getTeam = async (teamId) => {
     try {
-      const response = await fetch(`/api/v1/teams/${selectedTeamId}`);
+      const response = await fetch(`/api/v1/teams/${teamId}`);
       // const response = await fetch(`/api/v1/teams/${selectedTeam}?pageNumber=${pageNumber}`);
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
@@ -74,35 +74,37 @@ const NewSquadForm = (props) => {
         throw error;
       }
       const teamData = await response.json();
-      setTeam(teamData.response);
+      setTeam(teamData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
 
-  useEffect(() => {
-    getTeam();
-  }, [selectedTeamId]);
-  console.log(selectedTeamId);
 
-  // const playerTileComponents = team.map((playerObject) => {
-  //   return (
-  //     <PlayerTile
-  //       key={playerObject.id}
-  //       name={playerObject.player.name}
-  //       nationality={playerObject.player.nationality}
-  //       position={playerObject.statistics[0].games.position}
-  //       photo={playerObject.player.photo}
-  //       goals={playerObject.statistics[0].goals.total}
-  //       assists={playerObject.statistics[0].goals.assists}
-  //       saves={playerObject.statistics[0].goals.saves}
-  //       conceded={playerObject.statistics[0].goals.conceded}
-  //       yellowCards={playerObject.statistics[0].cards.yellow}
-  //       redCards={playerObject.statistics[0].cards.red}
-  //       playerChart={[playerObject.statistics[0].goals.total, playerObject.statistics[0].goals.assists]}
-  //     />
-  //   );
-  // });
+  // useEffect(() => {
+  //   getTeam();
+  // }, [selectedTeamId]);
+  // console.log(selectedTeamId);
+
+  const playerTileComponents = team.map((playerObject) => {
+
+    return (
+      <PlayerTile
+        key={playerObject.id}
+        name={playerObject.player.name}
+        nationality={playerObject.player.nationality}
+        position={playerObject.statistics[0].games.position}
+        photo={playerObject.player.photo}
+        goals={playerObject.statistics[0].goals.total}
+        assists={playerObject.statistics[0].goals.assists}
+        saves={playerObject.statistics[0].goals.saves}
+        conceded={playerObject.statistics[0].goals.conceded}
+        yellowCards={playerObject.statistics[0].cards.yellow}
+        redCards={playerObject.statistics[0].cards.red}
+        playerChart={[playerObject.statistics[0].goals.total, playerObject.statistics[0].goals.assists]}
+      />
+    );
+  });
 
   // also handle pagination with this for pageNumber in request
 
@@ -223,7 +225,7 @@ const NewSquadForm = (props) => {
         <div className="grid-x">
         <div className="row">
         <div className="columns small-3 small-centered">
-          <DropDownSelect listItems={teams} setSelectedTeam={setSelectedTeamId} />
+          <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
         </div>
         </div>
         </div>
@@ -395,6 +397,9 @@ const NewSquadForm = (props) => {
 
         <input className="button" type="submit" />
       </form>
+      <div className="grid-x align-right">
+        {playerTileComponents}
+        </div>
     </div>
   );
 };

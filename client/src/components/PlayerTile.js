@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Chart } from "react-google-charts";
+
 
 const PlayerTile = ({
   id,

@@ -1,6 +1,6 @@
 class PlayerSerializer {
-  static async getSummary(player) {
-    const allowedAttributes = ["id"];
+  static getSummary(player) {
+    const allowedAttributes = ["id", "name"];
     let serializedPlayer = {};
     for (const attribute of allowedAttributes) {
       serializedPlayer[attribute] = player[attribute];

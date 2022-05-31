@@ -16,15 +16,27 @@ class Player extends Model {
   }
 
   static get relationMappings() {
-    const { Assignment } = require("./index.js");
+    const { Assignment, Squad } = require("./index.js");
 
     return {
       assignments: {
-        relation: Model.ManyToManyRelation,
+        relation: Model.HasManyRelation,
         modelClass: Assignment,
         join: {
-          from: "players.assignmentId",
-          to: "assignments.id",
+          from: "players.id",
+          to: "assignments.playerId",
+        },
+      },
+      squads: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Squad,
+        join: {
+          from: "players.id",
+          through: {
+            from: "assignments.playerId",
+            to: "assignments.squadId",
+          },
+          to: "squads.id",
         },
       },
     };

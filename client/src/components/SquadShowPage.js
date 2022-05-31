@@ -26,8 +26,7 @@ const SquadShowPage = (props) => {
         throw error;
       }
       const squadData = await response.json();
-      debugger
-      console.log(squadData.squad)
+      console.log(squadData)
       setSquad(squadData.squad);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -105,7 +104,7 @@ const SquadShowPage = (props) => {
   //   }
   // };
 
-  const squadTileComponents = squad.assignments.map((squadObject) => {
+  const squadTileComponents = squad.map((squadObject) => {
     return ( 
     <SquadTile 
     key={squadObject.squad.id}

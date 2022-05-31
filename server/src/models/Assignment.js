@@ -7,10 +7,8 @@ class Assignment extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["squadId", "playerId", "position"],
+      required: ["position"],
       properties: {
-        squadId: { type: ["string", "integer"] },
-        playerId: { type: ["string", "integer"] },
         position: {
           enum: [
             "striker",
@@ -32,20 +30,21 @@ class Assignment extends Model {
 
   static get relationMappings() {
     const { Squad, Player } = require("./index.js");
+
     return {
-      players: {
+      player: {
         relation: Model.BelongsToOneRelation,
         modelClass: Player,
         join: {
-          from: "assignments.id",
-          to: "players.assignmentId",
+          from: "assignments.playerId",
+          to: "players.id",
         },
       },
       squad: {
         relation: Model.BelongsToOneRelation,
         modelClass: Squad,
         join: {
-          from: "assignments.squadId",
+          from: "assignments.playerId",
           to: "squads.id",
         },
       },

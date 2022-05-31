@@ -3,7 +3,7 @@ import cleanUserInput from "../../../services/cleanUserInput.js";
 import { ValidationError } from "objection";
 import { Assignment } from "../../../models/index.js";
 
-const squadAssignmentsRouter = express.Router({ mergeParams: true });
+const squadAssignmentsRouter = new express.Router({ mergeParams: true });
 
 squadAssignmentsRouter.post("/", async (req, res) => {
   const { position } = cleanUserInput(req.body);

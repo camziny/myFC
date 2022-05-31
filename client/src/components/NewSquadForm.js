@@ -181,7 +181,7 @@ const NewSquadForm = (props) => {
   };
 
   return (
-    <div className="form">
+    <div className="grid-container-fluid">
       <div className="squad-form-header">
         Create a Squad
         <div className="squad-form-image">
@@ -193,6 +193,7 @@ const NewSquadForm = (props) => {
         </div>
       </div>
       <ErrorList errors={errors} />
+      <div className="grid-x grid-margin-x">
       <form className="form-container align center" onSubmit={handleSubmit}>
         <div className="grid-x">
           <div className="cell small-4">
@@ -229,9 +230,9 @@ const NewSquadForm = (props) => {
         </div>
         </div>
         </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
+        <div className="grid-container full">
+          <div className="grid-x grid-margin-x">
+            <div className="cell small-4">
               <input
                 type="Add"
                 placeholder="Striker"
@@ -397,8 +398,11 @@ const NewSquadForm = (props) => {
 
         <input className="button" type="submit" />
       </form>
-      <div className="grid-x align-right">
+      </div>
+      <div className="grid-container full">
+        <div className="grid-x grid-margin-x">
         {playerTileComponents}
+        </div>
         </div>
     </div>
   );

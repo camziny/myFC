@@ -13,9 +13,11 @@ const squadsRouter = new express.Router({ mergeParams: true });
 
 squadsRouter.get("/", async (req, res) => {
   try {
-    const squads = await Squad.query().orderBy("createdAt");
-    return res.status(200).json({ squads: squads });
+    const squads = await Squad.query()
+    const serializedSquads = squads.map(squad => SquadSerializer.getSummary(squad))
+    return res.status(200).json({ squads: serializedSquads });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });
@@ -24,9 +26,10 @@ squadsRouter.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const squad = await Squad.query().findById(id);
-    const serializedSquad = await SquadSerializer.getSummary(squad)
+    const serializedSquad = await SquadSerializer.getSquadSummaryWithPlayers(squad)
     return res.status(200).json({ squad: serializedSquad });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });

@@ -116,11 +116,10 @@ const SquadShowPage = (props) => {
   )
   })
 
-
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
-    <div className="squad-show-page">
+    <div className="holy-grail-right">
       {squadTileComponents}
       <div className="squad-show-position-form">
         {errorList}

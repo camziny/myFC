@@ -67,7 +67,6 @@ const NewSquadForm = (props) => {
   const getTeam = async (teamId) => {
     try {
       const response = await fetch(`/api/v1/teams/${teamId}`);
-      // const response = await fetch(`/api/v1/teams/${selectedTeam}?pageNumber=${pageNumber}`);
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
@@ -80,14 +79,7 @@ const NewSquadForm = (props) => {
     }
   };
 
-
-  // useEffect(() => {
-  //   getTeam();
-  // }, [selectedTeamId]);
-  // console.log(selectedTeamId);
-
   const playerTileComponents = team.map((playerObject) => {
-
     return (
       <PlayerTile
         key={playerObject.id}
@@ -95,18 +87,20 @@ const NewSquadForm = (props) => {
         nationality={playerObject.player.nationality}
         position={playerObject.statistics[0].games.position}
         photo={playerObject.player.photo}
+        teamLogo={playerObject.statistics[0].team.logo}
         goals={playerObject.statistics[0].goals.total}
         assists={playerObject.statistics[0].goals.assists}
         saves={playerObject.statistics[0].goals.saves}
         conceded={playerObject.statistics[0].goals.conceded}
         yellowCards={playerObject.statistics[0].cards.yellow}
         redCards={playerObject.statistics[0].cards.red}
-        playerChart={[playerObject.statistics[0].goals.total, playerObject.statistics[0].goals.assists]}
+        playerChart={[
+          playerObject.statistics[0].goals.total,
+          playerObject.statistics[0].goals.assists,
+        ]}
       />
     );
   });
-
-  // also handle pagination with this for pageNumber in request
 
   const postSquad = async () => {
     try {
@@ -181,111 +175,73 @@ const NewSquadForm = (props) => {
   };
 
   return (
-    <div className="grid-container-fluid">
-      <div className="squad-form-header">
-        Create a Squad
-        <div className="squad-form-image">
-          <img
-            className="squad-backgroundImage"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsveTwTjrwHzeB-Rsc6d5i6RDMuu5LXDZjeg&usqp=CAU"
-            alt=""
-          />
+    <div className="holy-grail-grid">
+      <div className="holy-grail-header">
+        <div className="squad-form-header">
+          Create a Squad
+          <div className="squad-form-image">
+            <img
+              className="squad-backgroundImage"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsveTwTjrwHzeB-Rsc6d5i6RDMuu5LXDZjeg&usqp=CAU"
+              alt=""
+            />
+          </div>
         </div>
       </div>
       <ErrorList errors={errors} />
-      <div className="grid-x grid-margin-x">
-      <form className="form-container align center" onSubmit={handleSubmit}>
-        <div className="grid-x">
-          <div className="cell small-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="squad name"
-              onChange={handleInputChange}
-              value={newSquad.name}
-            />
-          </div>
+      <div className="holy-grail-left">
+        <form className="" onSubmit={handleSubmit}>
+          <div className="">
+            <div className="">
+              <input
+                type="text"
+                name="name"
+                placeholder="squad name"
+                onChange={handleInputChange}
+                value={newSquad.name}
+              />
+            </div>
 
-          <Dropzone onDrop={handleImageUpload}>
-            {({ getRootProps, getInputProps }) => (
+            <Dropzone onDrop={handleImageUpload}>
+              {({ getRootProps, getInputProps }) => (
                 <div className="cell medium-8">
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                  <input
-                    className="button small warning"
-                    type="add"
-                    onChange={handleInputChange}
-                    value="Add Image"
-                  />
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <input
+                      className="button small warning"
+                      type="add"
+                      onChange={handleInputChange}
+                      value="Add Image"
+                    />
+                  </div>
                 </div>
+              )}
+            </Dropzone>
+            <img src={uploadedImage.preview} />
+          </div>
+          <div className="grid-x">
+            <div className="row">
+              <div className="columns small-3 small-centered">
+                <DropDownSelect
+                  getTeam={getTeam}
+                  listItems={teams}
+                  setSelectedTeam={setSelectedTeamId}
+                />
               </div>
-            )}
-          </Dropzone>
-          <img src={uploadedImage.preview} />
-        </div>
-        <div className="grid-x">
-        <div className="row">
-        <div className="columns small-3 small-centered">
-          <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
-        </div>
-        </div>
-        </div>
-        <div className="grid-container full">
-          <div className="grid-x grid-margin-x">
-            <div className="cell small-4">
-              <input
-                type="Add"
-                placeholder="Striker"
-                className="button small warning"
-                href="#"
-                onChange={handleInputChange}
-                value={newSquad.striker}
-              />
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="leftWing"
-                placeholder="Left Wing"
-                onChange={handleInputChange}
-                value={newSquad.leftWing}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="rightWing"
-                placeholder="Right Wing"
-                onChange={handleInputChange}
-                value={newSquad.rightWing}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="centerMidfielder"
-                placeholder="Center Midfielder"
-                onChange={handleInputChange}
-                value={newSquad.centerMidfielder}
-              />
+          <div className="grid-container full">
+            <div className="grid-x grid-margin-x">
+              <div className="cell small-4">
+                <input
+                  type="Add"
+                  placeholder="Striker"
+                  className="button small warning"
+                  href="#"
+                  onChange={handleInputChange}
+                  value={newSquad.striker}
+                />
+              </div>
             </div>
           </div>
           <div className="row">
@@ -295,115 +251,156 @@ const NewSquadForm = (props) => {
                   type="Add"
                   className="button small warning"
                   href="#"
-                  name="leftMidfielder"
-                  placeholder="Left Midfielder"
+                  name="leftWing"
+                  placeholder="Left Wing"
                   onChange={handleInputChange}
-                  value={newSquad.leftMidfielder}
+                  value={newSquad.leftWing}
                 />
               </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="rightMidfielder"
-                placeholder="Right MidFielder"
-                onChange={handleInputChange}
-                value={newSquad.rightMidfielder}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="rightWing"
+                  placeholder="Right Wing"
+                  onChange={handleInputChange}
+                  value={newSquad.rightWing}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="leftCenterBack"
-                placeholder="Left Center Back"
-                onChange={handleInputChange}
-                value={newSquad.leftCenterBack}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="centerMidfielder"
+                  placeholder="Center Midfielder"
+                  onChange={handleInputChange}
+                  value={newSquad.centerMidfielder}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="columns large-1">
+                <div className="columns large-11">
+                  <input
+                    type="Add"
+                    className="button small warning"
+                    href="#"
+                    name="leftMidfielder"
+                    placeholder="Left Midfielder"
+                    onChange={handleInputChange}
+                    value={newSquad.leftMidfielder}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="add"
-                className="button small warning"
-                href="#"
-                name="rightCenterBack"
-                placeholder="Right Center Back"
-                onChange={handleInputChange}
-                value={newSquad.rightCenterBack}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="rightMidfielder"
+                  placeholder="Right MidFielder"
+                  onChange={handleInputChange}
+                  value={newSquad.rightMidfielder}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="leftBack"
-                placeholder="Left Back"
-                onChange={handleInputChange}
-                value={newSquad.leftBack}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="leftCenterBack"
+                  placeholder="Left Center Back"
+                  onChange={handleInputChange}
+                  value={newSquad.leftCenterBack}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                label="Add Right Back"
-                name="rightBack"
-                placeholder="Right Back"
-                onChange={handleInputChange}
-                value={newSquad.rightBack}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="add"
+                  className="button small warning"
+                  href="#"
+                  name="rightCenterBack"
+                  placeholder="Right Center Back"
+                  onChange={handleInputChange}
+                  value={newSquad.rightCenterBack}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="columns large-1">
-            <div className="columns large-11">
-              <input
-                type="Add"
-                className="button small warning"
-                href="#"
-                name="goalKeeper"
-                placeholder="GoalKeeper"
-                onChange={handleInputChange}
-                value={newSquad.goalKeeper}
-              />
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="leftBack"
+                  placeholder="Left Back"
+                  onChange={handleInputChange}
+                  value={newSquad.leftBack}
+                />
+              </div>
             </div>
           </div>
-        </div>
-
-        <input className="button" type="submit" />
-      </form>
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  label="Add Right Back"
+                  name="rightBack"
+                  placeholder="Right Back"
+                  onChange={handleInputChange}
+                  value={newSquad.rightBack}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="columns large-1">
+              <div className="columns large-11">
+                <input
+                  type="Add"
+                  className="button small warning"
+                  href="#"
+                  name="goalKeeper"
+                  placeholder="GoalKeeper"
+                  onChange={handleInputChange}
+                  value={newSquad.goalKeeper}
+                />
+              </div>
+            </div>
+          </div>
+          <input className="button" type="submit" />
+        </form>
       </div>
-      <div className="grid-container full">
-        <div className="grid-x grid-margin-x">
-        {playerTileComponents}
-        </div>
-        </div>
+      <div className="holy-grail-middle">
+        <div>{playerTileComponents}</div>
+      </div>
     </div>
   );
 };

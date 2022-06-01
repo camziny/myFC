@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const PlayerTile = ({
   id,
   name,
   nationality,
   position,
   photo,
+  teamLogo,
   goals,
   assists,
   saves,
@@ -19,10 +19,11 @@ const PlayerTile = ({
     <div className="playerTile">
       <Link to={`/players/${id}`}>
         <div className="playersInfo">
-          <div className="playerName">{name}</div>
-          <div className="playerNationality">{nationality}</div>
-          <div className="playerPosition">{position}</div>
+          <div className="playerName text-center">{name}</div>
+          <div className="playerNationality text-center">{nationality}</div>
+          <div className="playerPosition text-center">{position}</div>
           <img className="playerPhoto" src={photo}></img>
+          <img className="playerTeamLogo" src={teamLogo}></img>
           <div className="playerStatistics">
             <ul>
               <div className="playerGoals">Goals: {goals}</div>
@@ -39,7 +40,5 @@ const PlayerTile = ({
     </div>
   );
 };
-
-// };
 
 export default PlayerTile;

@@ -39,7 +39,6 @@ const TeamsShowPage = (props) => {
   };
 
   const playerTileComponents = team.map((playerObject) => {
-    console.log(playerObject.player.id, playerObject.player.name)
     return (
       <PlayerTile
         key={playerObject.player.id}
@@ -48,6 +47,7 @@ const TeamsShowPage = (props) => {
         nationality={playerObject.player.nationality}
         position={playerObject.statistics[0].games.position}
         photo={playerObject.player.photo}
+        teamLogo={playerObject.statistics[0].team.logo}
         goals={playerObject.statistics[0].goals.total}
         assists={playerObject.statistics[0].goals.assists}
         saves={playerObject.statistics[0].goals.saves}

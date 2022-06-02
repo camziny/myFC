@@ -1,4 +1,4 @@
-import SquadAssignmentSerializer from "./SquadAssignmentSerializer.js"
+import AssignmentSerializer from "./AssignmentSerializer.js"
 
 
 class SquadSerializer {
@@ -20,7 +20,7 @@ class SquadSerializer {
 
         const assignments = await squad.$relatedQuery("assignments")
         const serializedSquadDetails = await Promise.all(
-            assignments.map(async (assignment) => await SquadAssignmentSerializer.getSummary(assignment))
+            assignments.map(async (assignment) => await AssignmentSerializer.getSummary(assignment))
         )
         serializedSquad.details = serializedSquadDetails
 

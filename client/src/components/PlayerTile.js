@@ -23,7 +23,7 @@ const PlayerTile = ({
           <div className="playerNationality text-center">{nationality}</div>
           <div className="playerPosition text-center">{position}</div>
           <img className="playerPhoto" src={photo}></img>
-          <img className="playerTeamLogo" src={teamLogo}></img>
+          <img className="playerTeamLogo" src={teamLogo} alt="team logo"></img>
           <div className="playerStatistics">
             <ul>
               <div className="playerGoals">Goals: {goals}</div>

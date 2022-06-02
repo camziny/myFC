@@ -22,10 +22,10 @@ class Assignment extends Model {
             "leftBack",
             "rightBack",
             "goalKeeper",
-          ],
-        },
-      },
-    };
+          ]
+        }
+      }
+    }
   }
 
   static get relationMappings() {
@@ -37,18 +37,18 @@ class Assignment extends Model {
         modelClass: Player,
         join: {
           from: "assignments.playerId",
-          to: "players.id",
-        },
+          to: "players.id"
+        }
       },
       squad: {
         relation: Model.BelongsToOneRelation,
         modelClass: Squad,
         join: {
           from: "assignments.playerId",
-          to: "squads.id",
-        },
-      },
-    };
+          to: "squads.id"
+        }
+      }
+    }
   }
 }
 

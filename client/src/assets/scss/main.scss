@@ -16,6 +16,12 @@
   tab-size: 4;
 }
 
+.teamTile {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: repeat(auto-fit, 200px);
+}
+
 .teamsListBackground {
   text-align: center;
   align-items: center;
@@ -125,7 +131,7 @@
   background-image: url("https://cdn.freelogodesign.org/files/31506640979849029e138aa454d48f51/thumb/logo_200x200.png?v=0");
   filter: blur(10px);
   background-size: cover;
-  opacity: 0.25;
+  opacity: 0;
   transform: translateY(-100%) translateY(88px) translateZ(0);
   transition: transform 0.5s ease-out;
 }
@@ -135,11 +141,13 @@
   transform: translateY(0) translateZ(0);
 }
 
+
 .playerStatistics {
   margin: 0;
   padding: 0 24px 24px;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.5;
+  margin-bottom: 6px;
 }
 
 .playerName {
@@ -158,6 +166,7 @@
 }
 
 .playerPosition {
+  font-weight: 400;
   margin-bottom: 12px;
 }
 
@@ -303,3 +312,6 @@
 .dropdown:hover .dropbtn {
   background-color: #3e8e41;
 }
+
+
+

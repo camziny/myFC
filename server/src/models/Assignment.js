@@ -7,7 +7,7 @@ class Assignment extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["position"],
+      required: ["position", "playerId"],
       properties: {
         position: {
           enum: [
@@ -23,7 +23,7 @@ class Assignment extends Model {
             "rightBack",
             "goalKeeper",
           ]
-        }
+        },
       }
     }
   }

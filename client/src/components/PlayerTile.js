@@ -16,9 +16,10 @@ const PlayerTile = ({
   redCards,
 }) => {
   return (
-    <div className="playerTile">
+    <div className="radius bordered shadow card">
+      <div className="card-divider">
       <Link to={`/players/${id}`}>
-        <div className="playersInfo">
+        <div className="card-section">
           <div className="playerName text-center">{name}</div>
           <div className="playerNationality text-center">{nationality}</div>
           <div className="playerPosition text-center">{position}</div>
@@ -37,6 +38,7 @@ const PlayerTile = ({
           </div>
         </div>
       </Link>
+      </div>
     </div>
   );
 };

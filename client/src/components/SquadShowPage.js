@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import translateServerErrors from "../services/translateServerErrors.js";
 import ErrorList from "./layout/ErrorList.js";
-import SquadTile from "./SquadTile.js";
+import AssignmentTile from "./AssignmentTile.js";
 
 const SquadShowPage = (props) => {
   const { id } = useParams();
   const [squad, setSquad] = useState({
     name: "",
     image: {},
-    assignments: []
+    assignments: [],
   });
   const [errors, setErrors] = useState({});
 
@@ -26,7 +26,6 @@ const SquadShowPage = (props) => {
         throw error;
       }
       const squadData = await response.json();
-      console.log(squadData)
       setSquad(squadData.squad);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -104,26 +103,16 @@ const SquadShowPage = (props) => {
   //   }
   // };
 
-  const squadTileComponents = squad.map((squadObject) => {
-    return ( 
-    <SquadTile 
-    key={squadObject.squad.id}
-    id={squadObject.squad.id}
-    name={squadObject.squad.name}
-    image={squadObject.squad.image}
-    assignments={squadObject.squad.assignments}
-    />
-  )
-  })
+  const assignmentTileComponents = squad.assignments.map((assignmentObject) => {
+    return <AssignmentTile key={assignmentObject.playerId} id={assignmentObject.playerId} />;
+  });
 
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
     <div className="holy-grail-right">
-      {squadTileComponents}
-      <div className="squad-show-position-form">
-        {errorList}
-      </div>
+      {assignmentTileComponents}
+      <div className="squad-show-position-form">{errorList}</div>
     </div>
   );
 };

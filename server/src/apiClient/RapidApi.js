@@ -42,6 +42,25 @@ class RapidApi {
       return { error: error.message };
     }
   }
+
+  static async getAssignments({ playerId }) {
+    try {
+      const apiResponse = await got(
+        `'https://api-football-v1.p.rapidapi.com/v3/players?id=${playerId}&league=39&season=2021'`,
+        {
+          method: "GET",
+          headers: {
+            "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com",
+            "X-RapidAPI-Key": `${rapidApiKey}`,
+          },
+        }
+      );
+      const responseBody = apiResponse.body;
+      return responseBody;
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
 }
 
 export default RapidApi;

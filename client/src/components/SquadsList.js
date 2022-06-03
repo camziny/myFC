@@ -14,7 +14,7 @@ const SquadsList = (props) => {
         throw error;
       }
       const parsedResponse = await response.json();
-      console.log(parsedResponse.squads);
+      console.log(parsedResponse.assignments);
       setSquads(parsedResponse.squads);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -48,7 +48,7 @@ const SquadsList = (props) => {
       <div className="dropdown">
         <button className="dropbtn">Featured Squads</button>
         <div className="dropdown-content">
-          <a href="#">{squadTileComponents}</a>
+          {squadTileComponents}
         </div>
       </div>
       <div className="">{squadForm}</div>

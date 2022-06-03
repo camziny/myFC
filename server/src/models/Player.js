@@ -10,9 +10,9 @@ class Player extends Model {
       type: "object",
       required: ["name"],
       properties: {
-        name: { type: "string" }
-      }
-    }
+        name: { type: "string" },
+      },
+    };
   }
 
   static get relationMappings() {
@@ -25,7 +25,7 @@ class Player extends Model {
         join: {
           from: "players.id",
           to: "assignments.playerId",
-        }
+        },
       },
       squads: {
         relation: Model.ManyToManyRelation,
@@ -37,9 +37,9 @@ class Player extends Model {
             to: "assignments.squadId",
           },
           to: "squads.id",
-        }
-      }
-    }
+        },
+      },
+    };
   }
 }
 

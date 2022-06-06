@@ -7,7 +7,7 @@ const squadAssignmentsRouter = new express.Router({ mergeParams: true });
 
 squadAssignmentsRouter.post("/", async (req, res) => {
   const { position } = cleanUserInput(req.body);
-  const { playerId, squadId } = req.params;
+  const { playerId, squadId } = req.query.params;
   const userId = req.user.id;
   try {
     const newAssignment = await Assignment.query().insertAndFetch({ position, playerId, squadId });

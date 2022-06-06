@@ -43,10 +43,10 @@ class RapidApi {
     }
   }
 
-  static async getAssignments({ playerId }) {
+  static async getAssignments({ assignmentId }) {
     try {
       const apiResponse = await got(
-        `'https://api-football-v1.p.rapidapi.com/v3/players?id=${playerId}&league=39&season=2021'`,
+        `'https://api-football-v1.p.rapidapi.com/v3/players?id=${assignmentId}&league=39&season=2021'`,
         {
           method: "GET",
           headers: {

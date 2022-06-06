@@ -11,11 +11,9 @@ const SquadShowPage = (props) => {
     image: {},
     assignments: [],
   });
+  const { assignmentId } = useParams();
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    getSquad();
-  }, []);
+  const [assignments, setAssignments] = useState([]);
 
   const getSquad = async () => {
     try {
@@ -31,6 +29,51 @@ const SquadShowPage = (props) => {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
+
+  useEffect(() => {
+    getSquad();
+  }, []);
+
+  let assignedPlayerId = squad.assignments.map((assignmentObject) => {
+    return `${assignmentObject.playerId}`;
+  });
+
+  const getAssignments = async () => {
+    try {
+      const response = await fetch(`/api/v1/assignments/${assignedPlayerId}`);
+      if (!response.ok) {
+        const errorMessage = `{response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const assignmentsData = await response.json();
+      setAssignments(assignmentsData);
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+    }
+  };
+  useEffect(() => {
+    getAssignments();
+  }, []);
+
+  // const getAssignment = async () => {
+  //   try {
+  //     const response = await fetch(`/api/v1/squad/${assignment}`);
+  //     if (!response.ok) {
+  //       const errorMessage = `{response.status} (${response.statusText})`;
+  //       const error = new Error(errorMessage);
+  //       throw error;
+  //     }
+  //     const assignmentData = await response.json();
+  //     setTeam(assignmentData);
+  //   } catch (error) {
+  //     console.error(`Error in fetch: ${error.message}`);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getAssignment();
+  // }, []);
 
   // const deletePosition = async (positionId) => {
   //   try {

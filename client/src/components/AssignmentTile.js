@@ -5,7 +5,7 @@ const AssignmentTile = ({ id, name }) => {
   return (
     <div className="radius bordered shadow card">
       <div className="card-divider">
-        <Link to={`/players/${id}`}>
+        <Link to={`/assignments/${id}`}>
           <div className="card-section">
             <div className="playerName text-center">{name}</div>
           </div>

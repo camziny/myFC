@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import translateServerErrors from "../services/translateServerErrors.js";
 import ErrorList from "./layout/ErrorList.js";
 import AssignmentTile from "./AssignmentTile.js";
+import AssignmentShowPage from "./AssignmentShowPage.js";
 
 const SquadShowPage = (props) => {
   const { id } = useParams();
@@ -34,19 +35,17 @@ const SquadShowPage = (props) => {
     getSquad();
   }, []);
 
-  let assignedPlayerId = squad.assignments.map((assignmentObject) => {
-    return `${assignmentObject.playerId}`;
-  });
 
   const getAssignments = async () => {
     try {
-      const response = await fetch(`/api/v1/assignments/${assignedPlayerId}`);
+      const response = await fetch("/api/v1/assignments");
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
       const assignmentsData = await response.json();
+      console.log(assignmentsData)
       setAssignments(assignmentsData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -56,20 +55,7 @@ const SquadShowPage = (props) => {
     getAssignments();
   }, []);
 
-  // const getAssignment = async () => {
-  //   try {
-  //     const response = await fetch(`/api/v1/squad/${assignment}`);
-  //     if (!response.ok) {
-  //       const errorMessage = `{response.status} (${response.statusText})`;
-  //       const error = new Error(errorMessage);
-  //       throw error;
-  //     }
-  //     const assignmentData = await response.json();
-  //     setTeam(assignmentData);
-  //   } catch (error) {
-  //     console.error(`Error in fetch: ${error.message}`);
-  //   }
-  // };
+
 
   // useEffect(() => {
   //   getAssignment();
@@ -147,13 +133,25 @@ const SquadShowPage = (props) => {
   // };
 
   const assignmentTileComponents = squad.assignments.map((assignmentObject) => {
-    return <AssignmentTile key={assignmentObject.playerId} id={assignmentObject.playerId} />;
+    return <AssignmentTile 
+    key={assignmentObject.playerId} 
+    id={assignmentObject.playerId}
+    position={assignmentObject.position}
+    />;
   });
+
 
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
-    <div className="holy-grail-right">
+    <div className="grid-container">
+      <div className="squad-name text-center">
+        <h1>{squad.name}</h1>
+        <img className="squad-photo" src={squad.image}></img>
+        </div>
+        <div className="squad-player-list text-center">
+        <h4>Positions</h4>
+        </div>
       {assignmentTileComponents}
       <div className="squad-show-position-form">{errorList}</div>
     </div>

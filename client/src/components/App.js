@@ -12,6 +12,7 @@ import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
 import SquadsList from "./SquadsList.js";
 import SquadShowPage from "./SquadShowPage.js"
+import AssignmentShowPage from "./AssignmentShowPage.js"
 import { Link } from "react-router-dom"
 
 const App = (props) => {
@@ -42,6 +43,7 @@ const App = (props) => {
           </div>
           </div>
         </Route>
+        <Route exact path ="/assignments/:id" component={AssignmentShowPage} />
         <Route exact path="/squads" component={SquadsList} />
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />

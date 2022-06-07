@@ -398,10 +398,12 @@ const NewSquadForm = (props) => {
           <input className="button" type="submit" />
         </form>
       </div>
-      <div className="holy-grail-middle">
-        <div>{playerTileComponents}</div>
+        <div className="table-scroll">
+          <table>
+            {playerTileComponents}
+            </table>
+            </div>
       </div>
-    </div>
   );
 };
 

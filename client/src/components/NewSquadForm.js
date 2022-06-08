@@ -7,6 +7,7 @@ import DropDownSelect from "./DropDownSelect.js";
 import TeamsList from "./TeamsList";
 import TeamsShowPage from "./TeamsShowPage";
 import PlayerTile from "./PlayerTile";
+import PlayerOption from "./PlayerOption";
 
 const NewSquadForm = (props) => {
   const [newSquad, setNewSquad] = useState({
@@ -26,8 +27,6 @@ const NewSquadForm = (props) => {
       { goalKeeper: "", playerId: 0 },
     ],
   });
-
-  const [squadPlayer, setSquadPlayer] = useState([]);
 
   const [errors, setErrors] = useState({});
 
@@ -102,77 +101,77 @@ const NewSquadForm = (props) => {
     );
   });
 
-  const postSquad = async () => {
-    try {
-      const body = new FormData();
-      body.append("name", newSquad.name);
-      body.append("image", newSquad.image);
-      body.append("assignments", newSquad.assignments);
-      const response = await fetch("api/v1/squads", {
-        method: "POST",
-        headers: { Accept: "image/jpeg" },
-        body: body,
-      });
-      if (!response.ok) {
-        if (response.status === 422) {
-          const body = await response.json();
-          const newErrors = translateServerErrors(body.errors.data);
-          return setErrors(newErrors);
-        }
-        throw new Error(`${response.status} (${response.statusText})`);
-      } else {
+const postSquad = async () => {
+  try {
+    const body = new FormData();
+    body.append("name", newSquad.name);
+    body.append("image", newSquad.image);
+    body.append("assignments", newSquad.assignments);
+    const response = await fetch("api/v1/squads", {
+      method: "POST",
+      headers: { Accept: "image/jpeg" },
+      body: body,
+    });
+    if (!response.ok) {
+      if (response.status === 422) {
         const body = await response.json();
-        props.addNewSquad(body.squad);
-        clearForm();
+        const newErrors = translateServerErrors(body.errors.data);
+        return setErrors(newErrors);
       }
-    } catch (error) {
-      console.log(`Error in fetch: ${error.message}`);
+      throw new Error(`${response.status} (${response.statusText})`);
+    } else {
+      const body = await response.json();
+      props.addNewSquad(body.squad);
+      clearForm();
     }
-  };
-  const handleInputChange = (event) => {
-    event.preventDefault();
-    setNewSquad({ ...newSquad, [event.currentTarget.name]: event.currentTarget.value });
-  };
+  } catch (error) {
+    console.log(`Error in fetch: ${error.message}`);
+  }
+};
+const handleInputChange = (event) => {
+  event.preventDefault();
+  setNewSquad({ ...newSquad, [event.currentTarget.name]: event.currentTarget.value });
+};
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    postSquad();
-  };
+const handleSubmit = (event) => {
+  event.preventDefault();
+  postSquad();
+};
 
-  const handleImageUpload = (acceptedImage) => {
-    setNewSquad({
-      ...newSquad,
-      image: acceptedImage[0],
-    });
+const handleImageUpload = (acceptedImage) => {
+  setNewSquad({
+    ...newSquad,
+    image: acceptedImage[0],
+  });
 
-    setUploadedImage({
-      preview: URL.createObjectURL(acceptedImage[0]),
-    });
-  };
+  setUploadedImage({
+    preview: URL.createObjectURL(acceptedImage[0]),
+  });
+};
 
-  const clearForm = () => {
-    setNewSquad({
-      name: "",
-      image: {},
-      assignments: [
-        { striker: "", playerId: 0 },
-        { leftWing: "", playerId: 0 },
-        { rightWing: "", playerId: 0 },
-        { centerMidfielder: "", playerId: 0 },
-        { leftMidfielder: "", playerId: 0 },
-        { rightMidfielder: "", playerId: 0 },
-        { leftCenterBack: "", playerId: 0 },
-        { rightCenterBack: "", playerId: 0 },
-        { leftBack: "", playerId: 0 },
-        { rightBack: "", playerId: 0 },
-        { goalKeeper: "", playerId: 0 },
-      ],
-    });
+const clearForm = () => {
+  setNewSquad({
+    name: "",
+    image: {},
+    assignments: [
+      { striker: "", playerId: 0 },
+      { leftWing: "", playerId: 0 },
+      { rightWing: "", playerId: 0 },
+      { centerMidfielder: "", playerId: 0 },
+      { leftMidfielder: "", playerId: 0 },
+      { rightMidfielder: "", playerId: 0 },
+      { leftCenterBack: "", playerId: 0 },
+      { rightCenterBack: "", playerId: 0 },
+      { leftBack: "", playerId: 0 },
+      { rightBack: "", playerId: 0 },
+      { goalKeeper: "", playerId: 0 },
+    ],
+  });
 
-    setUploadedImage({
-      preview: "",
-    });
-  };
+  setUploadedImage({
+    preview: "",
+  });
+}
 
   return (
     <div className="holy-grail-grid">
@@ -398,12 +397,10 @@ const NewSquadForm = (props) => {
           <input className="button" type="submit" />
         </form>
       </div>
-        <div className="table-scroll">
-          <table>
-            {playerTileComponents}
-            </table>
-            </div>
+      <div className="table-scroll">
+        <table>{playerTileComponents}</table>
       </div>
+    </div>
   );
 };
 

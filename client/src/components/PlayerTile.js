@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const PlayerTile = ({
@@ -16,9 +16,12 @@ const PlayerTile = ({
   redCards,
   newSquad,
   handlePlayerAdd,
-  isSelected
+  isSelected,
 }) => {
-  console.log(id)
+  const [selected, setSelected] = useState(false);
+  const toggle = () => {
+    setSelected(!selected);
+  };
   return (
     <div className="radius bordered shadow card">
       <div className="card-divider">
@@ -38,11 +41,19 @@ const PlayerTile = ({
                 <div className="playerYellowCards">Yellow Cards: {yellowCards}</div>
                 <div className="playerRedCards">Red Cards: {redCards}</div>
               </ul>
-              <div className="button primary">
-                <button onClick={() => handlePlayerAdd(id, name)}>Add Player</button>
+              <div>
+                <button
+                  onClick={() => {
+                    toggle();
+                    handlePlayerAdd(id, name);
+                  }}
+                  className={"toggle-button" + (selected ? "toggle-selected" : "")}
+                >
+                  {selected ? "Player Selected" : "Add Player"}
+                </button>
               </div>
               <div></div>
-              {newSquad = null}
+              {(newSquad = null)}
             </div>
           </div>
         </div>

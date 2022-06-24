@@ -6,7 +6,6 @@ import Dropzone from "react-dropzone";
 import DropDownSelect from "./DropDownSelect.js";
 import PlayerTile from "./PlayerTile";
 
-
 const NewSquadForm = () => {
   const [newSquad, setNewSquad] = useState({
     name: "",

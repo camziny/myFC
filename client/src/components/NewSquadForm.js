@@ -4,43 +4,50 @@ import translateServerErrors from "../services/translateServerErrors";
 import ErrorList from "./layout/ErrorList";
 import Dropzone from "react-dropzone";
 import DropDownSelect from "./DropDownSelect.js";
-import TeamsList from "./TeamsList";
-import TeamsShowPage from "./TeamsShowPage";
 import PlayerTile from "./PlayerTile";
-import PlayerOption from "./PlayerOption";
 
-const NewSquadForm = (props) => {
+
+const NewSquadForm = () => {
   const [newSquad, setNewSquad] = useState({
     name: "",
     image: {},
-    assignments: [
-      { striker: "", playerId: 0 },
-      { leftWing: "", playerId: 0 },
-      { rightWing: "", playerId: 0 },
-      { centerMidfielder: "", playerId: 0 },
-      { leftMidfielder: "", playerId: 0 },
-      { rightMidfielder: "", playerId: 0 },
-      { leftCenterBack: "", playerId: 0 },
-      { rightCenterBack: "", playerId: 0 },
-      { leftBack: "", playerId: 0 },
-      { rightBack: "", playerId: 0 },
-      { goalKeeper: "", playerId: 0 },
-    ],
+    assignments: {
+      striker: 0,
+      leftWing: 0,
+      rightWing: 0,
+      centerMidfielder: 0,
+      leftMidfielder: 0,
+      rightMidfielder: 0,
+      leftCenterBack: 0,
+      rightCenterBack: 0,
+      leftBack: 0,
+      rightBack: 0,
+      goalKeeper: 0,
+    },
   });
+
+  const [selectedPlayer, setSelectedPlayer] = useState({
+    id: 0,
+    name: "",
+  });
+
+  const handlePlayerSelection = (id, name) => {
+    if (id === selectedPlayer) {
+      setSelectedPlayer({
+        id: 0,
+        name: "",
+      });
+    } else {
+      setSelectedPlayer({ id, name });
+    }
+  };
 
   const [errors, setErrors] = useState({});
-
-  const [shouldRedirect, setShouldRedirect] = useState({
-    status: false,
-    id: null,
-  });
 
   const [uploadedImage, setUploadedImage] = useState({
     preview: "",
   });
-
   const [teams, setTeams] = useState([]);
-
   const [selectedTeamId, setSelectedTeamId] = useState("");
   const [team, setTeam] = useState([]);
 
@@ -81,7 +88,9 @@ const NewSquadForm = (props) => {
   const playerTileComponents = team.map((playerObject) => {
     return (
       <PlayerTile
-        key={playerObject.id}
+        {...playerObject}
+        key={playerObject.player.id}
+        id={playerObject.player.id}
         name={playerObject.player.name}
         nationality={playerObject.player.nationality}
         position={playerObject.statistics[0].games.position}
@@ -93,85 +102,125 @@ const NewSquadForm = (props) => {
         conceded={playerObject.statistics[0].goals.conceded}
         yellowCards={playerObject.statistics[0].cards.yellow}
         redCards={playerObject.statistics[0].cards.red}
-        playerChart={[
-          playerObject.statistics[0].goals.total,
-          playerObject.statistics[0].goals.assists,
-        ]}
+        handlePlayerAdd={handlePlayerSelection}
+        isSelected={playerObject.id === selectedPlayer.id}
       />
     );
   });
 
-const postSquad = async () => {
-  try {
-    const body = new FormData();
-    body.append("name", newSquad.name);
-    body.append("image", newSquad.image);
-    body.append("assignments", newSquad.assignments);
-    const response = await fetch("api/v1/squads", {
-      method: "POST",
-      headers: { Accept: "image/jpeg" },
-      body: body,
-    });
-    if (!response.ok) {
-      if (response.status === 422) {
-        const body = await response.json();
-        const newErrors = translateServerErrors(body.errors.data);
-        return setErrors(newErrors);
-      }
-      throw new Error(`${response.status} (${response.statusText})`);
-    } else {
-      const body = await response.json();
-      props.addNewSquad(body.squad);
-      clearForm();
+  const handleSquadAssignment = (event) => {
+    console.log(event.currentTarget);
+    if (selectedPlayer !== null) {
+      setNewSquad({
+        ...newSquad,
+        assignments: { ...newSquad.assignments, [event.currentTarget.name]: selectedPlayer },
+      });
     }
-  } catch (error) {
-    console.log(`Error in fetch: ${error.message}`);
-  }
-};
-const handleInputChange = (event) => {
-  event.preventDefault();
-  setNewSquad({ ...newSquad, [event.currentTarget.name]: event.currentTarget.value });
-};
+  };
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  postSquad();
-};
+  const [addAssignments, setAddAssignments] = useState([]);
 
-const handleImageUpload = (acceptedImage) => {
-  setNewSquad({
-    ...newSquad,
-    image: acceptedImage[0],
-  });
+  const handleAssignmentOption = (event) => {
+    const checkIfPlayersInSquad = addAssignments.find(
+      (assignment) => assignment.playerId === event.currentTarget.id
+    );
+    if (checkIfPlayersInSquad) {
+      const newSetOfPlayers = [...setAddAssignments];
+      const playerToUpdateIndex = addAssignments.findIndex(
+        (assignment) => assignment.playerId == event.currentTarget.id
+      );
+      if (event.currentTarget.value > 0) {
+        newSetOfPlayers[playerToUpdateIndex] = {
+          ...newSetOfPlayers[playerToUpdateIndex],
+          assignment: event.currentTarget.value,
+        };
+        setAddAssignments(newSetOfPlayers);
+      } else {
+        const updatedPlayers = addAssignments.filter(
+          (assignment) => assignment.playerId !== event.currentTarget.id
+        );
+        setAddAssignments(updatedPlayers);
+      }
+    } else {
+      const newPlayer = {
+        assignment: event.currentTarget.value,
+        playerId: event.currentTarget.id,
+      };
+      setAddAssignments([...addAssignments, newPlayer]);
+    }
+  };
 
-  setUploadedImage({
-    preview: URL.createObjectURL(acceptedImage[0]),
-  });
-};
+  const postSquad = async () => {
+    try {
+      const body = new FormData();
+      body.append("name", newSquad.name);
+      body.append("image", newSquad.image);
+      body.append("assignments", newSquad.assignments);
+      const response = await fetch("api/v1/squads", {
+        method: "POST",
+        headers: { Accept: "image/jpeg" },
+        body: body,
+      });
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json();
+          const newErrors = translateServerErrors(body.errors.data);
+          return setErrors(newErrors);
+        }
+        throw new Error(`${response.status} (${response.statusText})`);
+      } else {
+        const body = await response.json();
+        props.addNewSquad(body.squad);
+        clearForm();
+      }
+    } catch (error) {
+      console.log(`Error in fetch: ${error.message}`);
+    }
+  };
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    setNewSquad({ ...newSquad, [event.currentTarget.name]: event.currentTarget.value });
+  };
 
-const clearForm = () => {
-  setNewSquad({
-    name: "",
-    image: {},
-    assignments: [
-      { striker: "", playerId: 0 },
-      { leftWing: "", playerId: 0 },
-      { rightWing: "", playerId: 0 },
-      { centerMidfielder: "", playerId: 0 },
-      { leftMidfielder: "", playerId: 0 },
-      { rightMidfielder: "", playerId: 0 },
-      { leftCenterBack: "", playerId: 0 },
-      { rightCenterBack: "", playerId: 0 },
-      { leftBack: "", playerId: 0 },
-      { rightBack: "", playerId: 0 },
-      { goalKeeper: "", playerId: 0 },
-    ],
-  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    postSquad();
+  };
 
-  setUploadedImage({
-    preview: "",
-  });
-}
+  const handleImageUpload = (acceptedImage) => {
+    setNewSquad({
+      ...newSquad,
+      image: acceptedImage[0],
+    });
+
+    setUploadedImage({
+      preview: URL.createObjectURL(acceptedImage[0]),
+    });
+  };
+
+  const clearForm = () => {
+    setNewSquad({
+      name: "",
+      image: {},
+      assignments: {
+        striker: 0,
+        leftWing: 0,
+        rightWing: 0,
+        centerMidfielder: 0,
+        leftMidfielder: 0,
+        rightMidfielder: 0,
+        leftCenterBack: 0,
+        rightCenterBack: 0,
+        leftBack: 0,
+        rightBack: 0,
+        goalKeeper: 0,
+      },
+    });
+
+    setUploadedImage({
+      preview: "",
+    });
+  };
 
   return (
     <div className="holy-grail-grid">
@@ -234,11 +283,16 @@ const clearForm = () => {
               <div className="cell small-4">
                 <input
                   type="Add"
+                  name="striker"
                   placeholder="Striker"
                   className="button small warning"
                   href="#"
-                  onChange={handleInputChange}
-                  value={newSquad.striker}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.striker.name
+                      ? newSquad.assignments.striker.name
+                      : "Striker"
+                  }
                 />
               </div>
             </div>
@@ -252,8 +306,12 @@ const clearForm = () => {
                   href="#"
                   name="leftWing"
                   placeholder="Left Wing"
-                  onChange={handleInputChange}
-                  value={newSquad.leftWing}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.leftWing.name
+                      ? newSquad.assignments.leftWing.name
+                      : "Left Wing"
+                  }
                 />
               </div>
             </div>
@@ -267,8 +325,12 @@ const clearForm = () => {
                   href="#"
                   name="rightWing"
                   placeholder="Right Wing"
-                  onChange={handleInputChange}
-                  value={newSquad.rightWing}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.rightWing.name
+                      ? newSquad.assignments.rightWing.name
+                      : "Right Wing"
+                  }
                 />
               </div>
             </div>
@@ -282,8 +344,12 @@ const clearForm = () => {
                   href="#"
                   name="centerMidfielder"
                   placeholder="Center Midfielder"
-                  onChange={handleInputChange}
-                  value={newSquad.centerMidfielder}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.centerMidfielder.name
+                      ? newSquad.assignments.centerMidfielder.name
+                      : "Center Midfielder"
+                  }
                 />
               </div>
             </div>
@@ -291,13 +357,17 @@ const clearForm = () => {
               <div className="columns large-1">
                 <div className="columns large-11">
                   <input
-                    type="Add"
+                    type="add"
                     className="button small warning"
                     href="#"
                     name="leftMidfielder"
                     placeholder="Left Midfielder"
-                    onChange={handleInputChange}
-                    value={newSquad.leftMidfielder}
+                    onClick={handleSquadAssignment}
+                    value={
+                      newSquad.assignments.leftMidfielder.name
+                        ? newSquad.assignments.leftMidfielder.name
+                        : "Left Midfielder"
+                    }
                   />
                 </div>
               </div>
@@ -307,13 +377,17 @@ const clearForm = () => {
             <div className="columns large-1">
               <div className="columns large-11">
                 <input
-                  type="Add"
+                  type="add"
                   className="button small warning"
                   href="#"
                   name="rightMidfielder"
                   placeholder="Right MidFielder"
-                  onChange={handleInputChange}
-                  value={newSquad.rightMidfielder}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.rightMidfielder.name
+                      ? newSquad.assignments.rightMidfielder.name
+                      : "Right Midfielder"
+                  }
                 />
               </div>
             </div>
@@ -322,13 +396,17 @@ const clearForm = () => {
             <div className="columns large-1">
               <div className="columns large-11">
                 <input
-                  type="Add"
+                  type="add"
                   className="button small warning"
                   href="#"
                   name="leftCenterBack"
                   placeholder="Left Center Back"
-                  onChange={handleInputChange}
-                  value={newSquad.leftCenterBack}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.leftCenterBack.name
+                      ? newSquad.assignments.leftCenterBack.name
+                      : "Left Center Back"
+                  }
                 />
               </div>
             </div>
@@ -342,8 +420,12 @@ const clearForm = () => {
                   href="#"
                   name="rightCenterBack"
                   placeholder="Right Center Back"
-                  onChange={handleInputChange}
-                  value={newSquad.rightCenterBack}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.rightCenterBack.name
+                      ? newSquad.assignments.rightCenterBack.name
+                      : "Right Center Back"
+                  }
                 />
               </div>
             </div>
@@ -352,13 +434,17 @@ const clearForm = () => {
             <div className="columns large-1">
               <div className="columns large-11">
                 <input
-                  type="Add"
+                  type="add"
                   className="button small warning"
                   href="#"
                   name="leftBack"
                   placeholder="Left Back"
-                  onChange={handleInputChange}
-                  value={newSquad.leftBack}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.leftBack.name
+                      ? newSquad.assignments.leftBack.name
+                      : "Left Back"
+                  }
                 />
               </div>
             </div>
@@ -367,14 +453,18 @@ const clearForm = () => {
             <div className="columns large-1">
               <div className="columns large-11">
                 <input
-                  type="Add"
+                  type="add"
                   className="button small warning"
                   href="#"
                   label="Add Right Back"
                   name="rightBack"
                   placeholder="Right Back"
-                  onChange={handleInputChange}
-                  value={newSquad.rightBack}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.rightBack.name
+                      ? newSquad.assignments.rightBack.name
+                      : "Right Back"
+                  }
                 />
               </div>
             </div>
@@ -383,13 +473,17 @@ const clearForm = () => {
             <div className="columns large-1">
               <div className="columns large-11">
                 <input
-                  type="Add"
+                  type="add"
                   className="button small warning"
                   href="#"
                   name="goalKeeper"
                   placeholder="GoalKeeper"
-                  onChange={handleInputChange}
-                  value={newSquad.goalKeeper}
+                  onClick={handleSquadAssignment}
+                  value={
+                    newSquad.assignments.goalKeeper.name
+                      ? newSquad.assignments.goalKeeper.name
+                      : "Goal Keeper"
+                  }
                 />
               </div>
             </div>

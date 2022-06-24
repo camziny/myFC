@@ -14,30 +14,38 @@ const PlayerTile = ({
   conceded,
   yellowCards,
   redCards,
+  newSquad,
+  handlePlayerAdd,
+  isSelected
 }) => {
+  console.log(id)
   return (
     <div className="radius bordered shadow card">
       <div className="card-divider">
-      <Link to={`/players/${id}`}>
-        <div className="card-section">
-          <div className="playerName text-center">{name}</div>
-          <div className="playerNationality text-center">{nationality}</div>
-          <div className="playerPosition text-center">{position}</div>
-          <img className="playerPhoto" src={photo}></img>
-          <img className="playerTeamLogo" src={teamLogo} alt="team logo"></img>
-          <div className="playerStatistics">
-            <ul>
-              <div className="playerGoals">Goals: {goals}</div>
-              <div className="playerAssists">Assists: {assists || 0}</div>
-              <div className="playerSaves">Saves: {saves || 0}</div>
-              <div className="playerConceded">Goals Allowed: {conceded || 0}</div>
-              <div className="playerYellowCards">Yellow Cards: {yellowCards}</div>
-              <div className="playerRedCards">Red Cards: {redCards}</div>
-            </ul>
-            <div></div>
+        <div className={`card-section ${isSelected ? "selected" : ""}`}>
+          <div className="player-preview">
+            <div className="playerName text-center">{name}</div>
+            <div className="playerNationality text-center">{nationality}</div>
+            <div className="playerPosition text-center">{position}</div>
+            <img className="playerPhoto" src={photo}></img>
+            <img className="playerTeamLogo" src={teamLogo} alt="team logo"></img>
+            <div className="playerStatistics">
+              <ul>
+                <div className="playerGoals">Goals: {goals}</div>
+                <div className="playerAssists">Assists: {assists || 0}</div>
+                <div className="playerSaves">Saves: {saves || 0}</div>
+                <div className="playerConceded">Goals Allowed: {conceded || 0}</div>
+                <div className="playerYellowCards">Yellow Cards: {yellowCards}</div>
+                <div className="playerRedCards">Red Cards: {redCards}</div>
+              </ul>
+              <div className="button primary">
+                <button onClick={() => handlePlayerAdd(id, name)}>Add Player</button>
+              </div>
+              <div></div>
+              {newSquad = null}
+            </div>
           </div>
         </div>
-      </Link>
       </div>
     </div>
   );

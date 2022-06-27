@@ -44,13 +44,15 @@ const App = (props) => {
           </div>
         </Route>
         <Route exact path ="/assignments/:id" component={AssignmentShowPage} />
-        <Route exact path="/squads" component={SquadsList} />
+        <Route exact path="/squads">
+          <SquadsList user={currentUser} />
+        </Route>
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />
         <Route exact path="/players" component={PlayersListPage} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <Route exact path="/squads/:id" component={SquadShowPage}>
+        <Route exact path="/squads/:id">
           <SquadShowPage user={currentUser} />
         </Route>
       </Switch>

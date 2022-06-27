@@ -31,20 +31,19 @@ squadsRouter.get("/:id", async (req, res) => {
 
 squadsRouter.post("/", uploadImage.single("image"), async (req, res) => {
   const cleanedFormInput = cleanUserInput(req.body);
-  const { name, players } = cleanedFormInput;
+  const { name, assignments } = cleanedFormInput;
+  const userId = req.user.id
+
   try {
-    if (players) {
       const newSquad = await Squad.query().insertAndFetch({
         name,
         image: req.file.location,
         assignments,
+        userId,
       });
-      for (const player of players) {
-        await newSquad.$relatedQuery("assignments").insert({ playerId: player.playerId });
-      }
       return res.status(201).json({ squad: newSquad });
-    }
   } catch (error) {
+    console.log(error)
     if (error instanceof ValidationError) {
       return res.status(422).json({ errors: error.date });
     }

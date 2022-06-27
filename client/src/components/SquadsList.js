@@ -14,7 +14,6 @@ const SquadsList = (props) => {
         throw error;
       }
       const parsedResponse = await response.json();
-      console.log(parsedResponse.assignments);
       setSquads(parsedResponse.squads);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -35,13 +34,14 @@ const SquadsList = (props) => {
         key={squadObject.id}
         id={squadObject.id}
         name={squadObject.name}
-        image={squadObject.image}
-        assignments={squadObject.assignments}
       />
     );
   });
 
-  const squadForm = <NewSquadForm addNewSquad={addNewSquad} />;
+  const squadForm = props.user ? (
+  <NewSquadForm addNewSquad={addNewSquad} />
+  ) : null
+
 
   return (
     <div>
@@ -51,7 +51,7 @@ const SquadsList = (props) => {
           {squadTileComponents}
         </div>
       </div>
-      <div className="">{squadForm}</div>
+      <div>{squadForm}</div>
     </div>
   );
 };

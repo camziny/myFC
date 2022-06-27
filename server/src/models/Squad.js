@@ -11,7 +11,7 @@ class Squad extends Model {
       properties: {
         name: { type: "string", minLength: 1 },
         image: { type: "string" },
-        userId: { type: ["string", "integer"] },
+        assignments: { type: "string" },
       },
     };
   }

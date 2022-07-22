@@ -7,48 +7,60 @@ class Assignment extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["position", "playerId"],
+      required: [
+        "st",
+        "lw",
+        "rw",
+        "cm",
+        "lm",
+        "rm",
+        "lcb",
+        "rcb",
+        "lb",
+        "rb",
+        "gk",
+        "squadId",
+        "userId",
+      ],
       properties: {
-        position: {
-          enum: [
-            "striker",
-            "leftWing",
-            "rightWing",
-            "centerMidfielder",
-            "leftMidfielder",
-            "rightMidfielder",
-            "leftCenterBack",
-            "rightCenterBack",
-            "leftBack",
-            "rightBack",
-            "goalKeeper",
-          ]
-        },
-      }
-    }
+        st: { type: ["string",  "integer"], },
+        lw: { type: ["string",  "integer"], },
+        rw: { type: ["string",  "integer"], },
+        cm: { type: ["string",  "integer"], },
+        lm: { type: ["string",  "integer"], },
+        rm: { type: ["string",  "integer"], },
+        lcb: { type: ["string",  "integer"], },
+        rcb: { type: ["string",  "integer"], },
+        lb: { type: ["string",  "integer"], },
+        rb: { type: ["string",  "integer"], },
+        gk: { type: ["string",  "integer"], },
+        squadId: { type: ["string", "integer"] },
+        userId: { type: ["string", "integer"] },
+      },
+    };
   }
 
   static get relationMappings() {
-    const { Squad, Player } = require("./index.js");
+    const { Squad, User } = require("./index.js");
 
     return {
-      player: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: Player,
-        join: {
-          from: "assignments.playerId",
-          to: "players.id"
-        }
-      },
       squad: {
         relation: Model.BelongsToOneRelation,
         modelClass: Squad,
         join: {
-          from: "assignments.playerId",
-          to: "squads.id"
-        }
-      }
-    }
+          from: "assignments.squadId",
+          to: "squads.id",
+        },
+      },
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: "assignments.userId",
+          to: "users.id",
+        },
+      },
+    };
   }
 }
 

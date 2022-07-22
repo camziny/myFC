@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useParams } from "react-router-dom";
 import translateServerErrors from "../services/translateServerErrors";
 import ErrorList from "./layout/ErrorList";
 import Dropzone from "react-dropzone";
 import DropDownSelect from "./DropDownSelect.js";
 import PlayerTile from "./PlayerTile";
 
-const NewSquadForm = () => {
+const NewSquadForm = (props) => {
+  const { id } = useParams()
   const [newSquad, setNewSquad] = useState({
     name: "",
     image: {},
-    assignments: {
-      striker: 0,
-      leftWing: 0,
-      rightWing: 0,
-      centerMidfielder: 0,
-      leftMidfielder: 0,
-      rightMidfielder: 0,
-      leftCenterBack: 0,
-      rightCenterBack: 0,
-      leftBack: 0,
-      rightBack: 0,
-      goalKeeper: 0,
-    },
   });
 
   const [selectedPlayer, setSelectedPlayer] = useState({
@@ -117,44 +105,49 @@ const NewSquadForm = () => {
     }
   };
 
-  const [addAssignments, setAddAssignments] = useState([]);
+  // const [addAssignments, setAddAssignments] = useState([]);
 
-  const handleAssignmentOption = (event) => {
-    const checkIfPlayersInSquad = addAssignments.find(
-      (assignment) => assignment.playerId === event.currentTarget.id
-    );
-    if (checkIfPlayersInSquad) {
-      const newSetOfPlayers = [...setAddAssignments];
-      const playerToUpdateIndex = addAssignments.findIndex(
-        (assignment) => assignment.playerId == event.currentTarget.id
-      );
-      if (event.currentTarget.value > 0) {
-        newSetOfPlayers[playerToUpdateIndex] = {
-          ...newSetOfPlayers[playerToUpdateIndex],
-          assignment: event.currentTarget.value,
-        };
-        setAddAssignments(newSetOfPlayers);
-      } else {
-        const updatedPlayers = addAssignments.filter(
-          (assignment) => assignment.playerId !== event.currentTarget.id
-        );
-        setAddAssignments(updatedPlayers);
-      }
-    } else {
-      const newPlayer = {
-        assignment: event.currentTarget.value,
-        playerId: event.currentTarget.id,
-      };
-      setAddAssignments([...addAssignments, newPlayer]);
-    }
-  };
+  // const handleAssignmentOption = (event) => {
+  //   const checkIfPlayersInSquad = addAssignments.find(
+  //     (assignment) => assignment.playerId === event.currentTarget.id
+  //   );
+  //   if (checkIfPlayersInSquad) {
+  //     const newSetOfPlayers = [...setAddAssignments];
+  //     const playerToUpdateIndex = addAssignments.findIndex(
+  //       (assignment) => assignment.playerId == event.currentTarget.id
+  //     );
+  //     if (event.currentTarget.value > 0) {
+  //       newSetOfPlayers[playerToUpdateIndex] = {
+  //         ...newSetOfPlayers[playerToUpdateIndex],
+  //         assignment: event.currentTarget.value,
+  //       };
+  //       setAddAssignments(newSetOfPlayers);
+  //     } else {
+  //       const updatedPlayers = addAssignments.filter(
+  //         (assignment) => assignment.playerId !== event.currentTarget.id
+  //       );
+  //       setAddAssignments(updatedPlayers);
+  //     }
+  //   } else {
+  //     const newPlayer = {
+  //       assignment: event.currentTarget.value,
+  //       playerId: event.currentTarget.id,
+  //     };
+  //     setAddAssignments([...addAssignments, newPlayer]);
+  //   }
+  // };
 
   const postSquad = async () => {
+    // let preFetchErrors = {};
+    // if (!newSquad.name) {
+    //   preFetchErrors.Name = "must have a required property 'name'";
+    // }
+    // if (Object.keys(preFetchErrors).length) return setErrors(preFetchErrors);
+    // else setErrors({});
     try {
       const body = new FormData();
       body.append("name", newSquad.name);
       body.append("image", newSquad.image);
-      body.append("assignments", newSquad.assignments);
       const response = await fetch("api/v1/squads", {
         method: "POST",
         headers: { Accept: "image/jpeg" },
@@ -164,6 +157,7 @@ const NewSquadForm = () => {
         if (response.status === 422) {
           const body = await response.json();
           const newErrors = translateServerErrors(body.errors.data);
+          console.log(body.errors);
           return setErrors(newErrors);
         }
         throw new Error(`${response.status} (${response.statusText})`);
@@ -173,6 +167,7 @@ const NewSquadForm = () => {
         clearForm();
       }
     } catch (error) {
+      console.log(error);
       console.log(`Error in fetch: ${error.message}`);
     }
   };
@@ -201,19 +196,6 @@ const NewSquadForm = () => {
     setNewSquad({
       name: "",
       image: {},
-      assignments: {
-        striker: 0,
-        leftWing: 0,
-        rightWing: 0,
-        centerMidfielder: 0,
-        leftMidfielder: 0,
-        rightMidfielder: 0,
-        leftCenterBack: 0,
-        rightCenterBack: 0,
-        leftBack: 0,
-        rightBack: 0,
-        goalKeeper: 0,
-      },
     });
 
     setUploadedImage({
@@ -234,20 +216,16 @@ const NewSquadForm = () => {
             />
           </div>
         </div>
-      </div>
-      <ErrorList errors={errors} />
-      <div className="holy-grail-left">
-        <form className="" onSubmit={handleSubmit}>
-          <div className="">
-            <div className="">
-              <input
-                type="text"
-                name="name"
-                placeholder="squad name"
-                onChange={handleInputChange}
-                value={newSquad.name}
-              />
-            </div>
+        <ErrorList errors={errors} />
+        <div className="cell medium-8">
+          <form className="" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              placeholder="squad name"
+              onChange={handleInputChange}
+              value={newSquad.name}
+            />
 
             <Dropzone onDrop={handleImageUpload}>
               {({ getRootProps, getInputProps }) => (
@@ -265,233 +243,9 @@ const NewSquadForm = () => {
               )}
             </Dropzone>
             <img src={uploadedImage.preview} />
-          </div>
-          <div className="grid-x">
-            <div className="row">
-              <div className="columns small-3 small-centered">
-                <DropDownSelect
-                  getTeam={getTeam}
-                  listItems={teams}
-                  setSelectedTeam={setSelectedTeamId}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="grid-container full">
-            <div className="grid-x grid-margin-x">
-              <div className="cell small-4">
-                <input
-                  type="Add"
-                  name="striker"
-                  placeholder="Striker"
-                  className="button small warning"
-                  href="#"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.striker.name
-                      ? newSquad.assignments.striker.name
-                      : "Striker"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="Add"
-                  className="button small warning"
-                  href="#"
-                  name="leftWing"
-                  placeholder="Left Wing"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.leftWing.name
-                      ? newSquad.assignments.leftWing.name
-                      : "Left Wing"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="Add"
-                  className="button small warning"
-                  href="#"
-                  name="rightWing"
-                  placeholder="Right Wing"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.rightWing.name
-                      ? newSquad.assignments.rightWing.name
-                      : "Right Wing"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="Add"
-                  className="button small warning"
-                  href="#"
-                  name="centerMidfielder"
-                  placeholder="Center Midfielder"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.centerMidfielder.name
-                      ? newSquad.assignments.centerMidfielder.name
-                      : "Center Midfielder"
-                  }
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="columns large-1">
-                <div className="columns large-11">
-                  <input
-                    type="add"
-                    className="button small warning"
-                    href="#"
-                    name="leftMidfielder"
-                    placeholder="Left Midfielder"
-                    onClick={handleSquadAssignment}
-                    value={
-                      newSquad.assignments.leftMidfielder.name
-                        ? newSquad.assignments.leftMidfielder.name
-                        : "Left Midfielder"
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  name="rightMidfielder"
-                  placeholder="Right MidFielder"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.rightMidfielder.name
-                      ? newSquad.assignments.rightMidfielder.name
-                      : "Right Midfielder"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  name="leftCenterBack"
-                  placeholder="Left Center Back"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.leftCenterBack.name
-                      ? newSquad.assignments.leftCenterBack.name
-                      : "Left Center Back"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  name="rightCenterBack"
-                  placeholder="Right Center Back"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.rightCenterBack.name
-                      ? newSquad.assignments.rightCenterBack.name
-                      : "Right Center Back"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  name="leftBack"
-                  placeholder="Left Back"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.leftBack.name
-                      ? newSquad.assignments.leftBack.name
-                      : "Left Back"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  label="Add Right Back"
-                  name="rightBack"
-                  placeholder="Right Back"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.rightBack.name
-                      ? newSquad.assignments.rightBack.name
-                      : "Right Back"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="columns large-1">
-              <div className="columns large-11">
-                <input
-                  type="add"
-                  className="button small warning"
-                  href="#"
-                  name="goalKeeper"
-                  placeholder="GoalKeeper"
-                  onClick={handleSquadAssignment}
-                  value={
-                    newSquad.assignments.goalKeeper.name
-                      ? newSquad.assignments.goalKeeper.name
-                      : "Goal Keeper"
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <input className="button" type="submit" />
-        </form>
-      </div>
-      <div className="table-scroll">
-        <table>{playerTileComponents}</table>
+            <input className="button" type="submit" />
+          </form>
+        </div>
       </div>
     </div>
   );

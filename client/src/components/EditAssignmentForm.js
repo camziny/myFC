@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import ErrorList from "./layout/ErrorList";
 
-const EditPositionForm = (props) => {
-  const [editPosition, setEditPosition] = useState({
-    name: props.name,
+const EditAssignmentForm = (props) => {
+  const [editAssignment, setEditAssignment] = useState({
     position: props.position,
   });
 
   const handleInputChange = (event) => {
-    setEditPosition({
-      ...editPosition,
+    setEditAssignment({
+      ...editAssignment,
       [event.currentTarget.name]: event.currentTarget.value,
     });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (await props.patchPosition(editPosition, props.id)) {
+    if (await props.patchAssignment(editAssignment, props.id)) {
       props.toggleEdit();
     }
   };
@@ -25,7 +24,7 @@ const EditPositionForm = (props) => {
 
   return (
     <div>
-      <h3>Update Position </h3>
+      <h3>Update Player</h3>
       {errorList}
       <form
         onSubmit={async (event) => {
@@ -34,17 +33,16 @@ const EditPositionForm = (props) => {
       >
         <label>
           Add Player:
-          <input type="text" name="name" onChange={handleInputChange} value={editPosition.name} />
-        </label>
         <input
           type="button"
           name="position"
           onChange={handleInputChange}
-          value={editPosition.position}
+          value={editAssignment.position}
         />
+        </label>
       </form>
     </div>
   );
 };
 
-export default EditPositionForm;
+export default EditAssignmentForm;

@@ -12,8 +12,8 @@ import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
 import SquadsList from "./SquadsList.js";
 import SquadShowPage from "./SquadShowPage.js"
-import AssignmentShowPage from "./AssignmentShowPage.js"
 import { Link } from "react-router-dom"
+import AssignmentShowPage from "./AssignmentShowPage.js";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -43,7 +43,6 @@ const App = (props) => {
           </div>
           </div>
         </Route>
-        <Route exact path ="/assignments/:id" component={AssignmentShowPage} />
         <Route exact path="/squads">
           <SquadsList user={currentUser} />
         </Route>
@@ -53,6 +52,7 @@ const App = (props) => {
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/squads/:id">
+        <Route exact path ="/assignments/:id" component={AssignmentShowPage} />
           <SquadShowPage user={currentUser} />
         </Route>
       </Switch>

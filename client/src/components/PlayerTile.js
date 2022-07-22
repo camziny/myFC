@@ -14,7 +14,7 @@ const PlayerTile = ({
   conceded,
   yellowCards,
   redCards,
-  newSquad,
+  newAssignment,
   handlePlayerAdd,
   isSelected,
 }) => {
@@ -23,7 +23,7 @@ const PlayerTile = ({
     setSelected(!selected);
   };
   return (
-    <div className="radius bordered shadow card">
+    <div className="radius bordered shadow">
       <div className="card-divider">
         <div className={`card-section ${isSelected ? "selected" : ""}`}>
           <div className="player-preview">
@@ -53,7 +53,7 @@ const PlayerTile = ({
                 </button>
               </div>
               <div></div>
-              {(newSquad = null)}
+              {(newAssignment = null)}
             </div>
           </div>
         </div>

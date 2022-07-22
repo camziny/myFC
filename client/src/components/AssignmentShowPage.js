@@ -18,6 +18,7 @@ const AssignmentShowPage = (props) => {
         throw error;
       }
       const assignmentData = await response.json();
+      console.log(assignmentData)
       setAssignment(assignmentData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -25,7 +26,7 @@ const AssignmentShowPage = (props) => {
   };
 
   useEffect(() => {
-    getAssignment();
+    getAssignment()
   }, []);
 
   const squadAssignmentTileComponents = assignment.map((assignmentObject) => {
@@ -52,8 +53,8 @@ const AssignmentShowPage = (props) => {
         yellowCards={assignmentObject.statistics[0].cards.yellow}
         redCards={assignmentObject.statistics[0].cards.red}
       />
-    );
-  });
+      );
+    });
 
   return (
  <div>

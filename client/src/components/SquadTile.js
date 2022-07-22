@@ -1,12 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SquadTile = ({ id, name, image, assignments }) => {
+const SquadTile = ({ id, name }) => {
   return (
     <div className="inline-list">
       <Link to={`/squads/${id}`}> {name} </Link>
-      <div className="squadImage"> {image} </div>
-      <div className="assignments"> {assignments} </div>
     </div>
   );
 };

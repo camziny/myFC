@@ -1,8 +1,8 @@
 import AssignmentSerializer from "./AssignmentSerializer.js";
 
 class SquadSerializer {
-  static getSummary(squad) {
-    const allowedAttributes = ["id", "name", "image", "assignments"];
+  static async getSummary(squad) {
+    const allowedAttributes = ["id", "name", "image"];
     let serializedSquad = {};
     for (const attribute of allowedAttributes) {
       serializedSquad[attribute] = squad[attribute];
@@ -10,18 +10,16 @@ class SquadSerializer {
     return serializedSquad;
   }
 
-  static async getSquadSummaryWithPlayers(squad) {
-    const allowedAttributes = ["id", "name", "image", "assignments"];
+  static async getDetails(squad) {
+    const allowedAttributes = ["name", "image", "assignments"];
     let serializedSquad = {};
     for (const attribute of allowedAttributes) {
       serializedSquad[attribute] = squad[attribute];
     }
     const assignments = await squad.$relatedQuery("assignments");
-    const serializedAssignments = await Promise.all(
+    serializedSquad.assignments = await Promise.all(
       assignments.map(async (assignment) => await AssignmentSerializer.getSummary(assignment))
-    );
-    serializedSquad.assignments = serializedAssignments;
-
+      );
     return serializedSquad;
   }
 }

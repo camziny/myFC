@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import translateServerErrors from "../services/translateServerErrors.js";
 import ErrorList from "./layout/ErrorList.js";
 import AssignmentTile from "./AssignmentTile.js";
-import AssignmentShowPage from "./AssignmentShowPage.js";
+import NewAssignmentForm from "./NewAssignmentForm.js";
+import AssignmentShowPage from "./AssignmentShowPage.js"
 
 const SquadShowPage = (props) => {
   const { id } = useParams();
@@ -12,9 +13,15 @@ const SquadShowPage = (props) => {
     image: {},
     assignments: [],
   });
-  const { assignmentId } = useParams();
   const [errors, setErrors] = useState({});
-  const [assignments, setAssignments] = useState([]);
+
+  useEffect(() => {
+    getSquad();
+  }, []);
+
+  const addNewAssignment = (assignment) => {
+    setSquad({ ...squad, assignments: [...squad.assignments, assignment] });
+  };
 
   const getSquad = async () => {
     try {
@@ -25,135 +32,144 @@ const SquadShowPage = (props) => {
         throw error;
       }
       const squadData = await response.json();
+      console.log("squad below");
+      console.log(squadData);
       setSquad(squadData.squad);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
 
-  useEffect(() => {
-    getSquad();
-  }, []);
-
-
-  const getAssignments = async () => {
+  const deleteAssignment = async (assignmentId) => {
     try {
-      const response = await fetch("/api/v1/assignments");
+      const response = await fetch(`api/v1/assignments/${assignmentId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
       if (!response.ok) {
-        const errorMessage = `{response.status} (${response.statusText})`;
-        const error = new Error(errorMessage);
-        throw error;
+        if (response.status === 401) {
+          const body = await response.json();
+          return setErrors(body);
+        } else {
+          throw new Error(`${response.status} (${response.statusText})`);
+        }
+      } else {
+        const body = await response.json();
+        const filteredAssignments = squad.assignments.filter((assignment) => {
+          return assignment.id !== assignmentId;
+        });
+        setErrors({});
+        setSquad({ ...squad, assignments: filteredAssignments });
       }
-      const assignmentsData = await response.json();
-      console.log(assignmentsData)
-      setAssignments(assignmentsData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
     }
   };
-  useEffect(() => {
-    getAssignments();
-  }, []);
 
+  const patchAssignment = async (assignmentBody, assignmentId) => {
+    try {
+      const response = await fetch(`/api/v1/assignments/${assignmentId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(assignmentBody),
+      });
+      if (!response.ok) {
+        if (response.status === 422) {
+          const body = await response.json();
+          const updatedAssignmentsWithErrors = squad.assignments.map((assignment) => {
+            if (assignment.id === assignmentId) {
+              assignment.errors = body;
+            }
+            return assignment;
+          });
+          setSquad({ ...squad, assignments: updatedAssignmentsWithErrors });
+          return false;
+        } else {
+          const errorMessage = `${response.status} (${response.statusText})`;
+          const error = new Error(errorMessage)
+          throw error;
+        }
+      } else {
+        const body = await response.json();
+        const updatedAssignments = squad.assignments.map((assignment) => {
+          if (assignment.id === assignmentId) {
+            assignment.position = body.assignment.position;
+            if (review.errors) {
+              delete review.errors;
+            }
+          }
+          return assignment;
+        });
+        setErrors({});
+        setSquad({ ...squad, assignments: updatedAssignments})
+        return true;
+      }
+    } catch (error) {
+      console.error(`Error in fetch: ${error.message}`);
+      return false;
+    }
+  };
 
-
-  // useEffect(() => {
-  //   getAssignment();
-  // }, []);
-
-  // const deletePosition = async (positionId) => {
-  //   try {
-  //     const response = await fetch(`/api/v1/positions/${positionId}`, {
-  //       method: "DELETE",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-  //     if (!response.ok) {
-  //       if (response.status === 401) {
-  //         const body = await response.json();
-  //         return setErrors(body);
-  //       } else {
-  //         throw new Error(`${response.status} (${response.statusText})`);
-  //       }
-  //     } else {
-  //       const body = await response.json();
-  //       const filteredPositions = squad.positions.filter((position) => {
-  //         return position.id !== positionId;
-  //       });
-  //       setErrors({});
-  //       setSquad({ ...squad, positions: filteredPositions });
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error in fetch: ${error.message}`);
-  //   }
-  // };
-
-  // const patchPosition = async (positionBody, positionId) => {
-  //   try {
-  //     const response = await fetch(`/api/v1/positions/${positionId}`, {
-  //       method: "PATCH",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(positionBody),
-  //     });
-  //     if (!response.ok) {
-  //       if (response.status === 422) {
-  //         const body = await response.json();
-  //         const updatedPositionsWithErrors = squad.positions.map((position) => {
-  //           if (position.id === positionId) {
-  //             position.errors = body;
-  //           }
-  //           return position;
-  //         });
-  //         setSquad({ ...squad, positions: updatedPositionsWithErrors });
-  //         return false;
-  //       } else {
-  //         const errorMessage = `${response.status} (${response.statusText})`;
-  //         const error = new Error(errorMessage);
-  //         throw error;
-  //       }
-  //     } else {
-  //       const body = await response.json();
-  //       const updatedPositions = squad.positions.map((position) => {
-  //         if (position.id === positionId) {
-  //           position.name = body.position.name;
-  //           position.position = body.position.position;
-  //           if (position.errors) {
-  //             delete position.errors;
-  //           }
-  //         }
-  //         return position;
-  //       });
-  //       setErrors({});
-  //       setSquad({ ...squad, positions: updatedPositions });
-  //       return true;
-  //     }
-  //   } catch (error) {
-  //     console.error(`Error in fetch: ${error.message}`);
-  //     return false;
-  //   }
-  // };
-
-  const assignmentTileComponents = squad.assignments.map((assignmentObject) => {
-    return <AssignmentTile 
-    key={assignmentObject.playerId} 
-    id={assignmentObject.playerId}
-    position={assignmentObject.position}
-    />;
+  const assignmentTiles = squad.assignments.map((assignmentObject) => {
+    console.log(assignmentObject)
+    let curUserId = null;
+    let userLoggedIn = false;
+    if (props.user) {
+      curUserId = props.user.id;
+      userLoggedIn = true;
+    }
+    return (
+      <AssignmentTile
+        {...assignmentObject}
+        key={assignmentObject.id}
+        id={assignmentObject.id}
+        position={assignmentObject.position}
+        creatorId={assignmentObject.userId}
+        creator={assignmentObject.user}
+        deleteAssignment={deleteAssignment}
+        curUserId={curUserId}
+        patchAssignment={patchAssignment}
+        userLoggedIn={userLoggedIn}
+      />
+    );
   });
 
+  const squadName = squad.name ? <div className="squad-show-name">{squad.name}</div> : null;
+
+  const squadImage = squad.image ? (
+    <div className="squad-show-image">
+      <img src={squad.image}></img>
+    </div>
+  ) : null;
+
+  const assignmentSection = assignmentTiles.length ? (
+    <>
+    <div className="squad-assignment-section">
+      <h3>{squad.name} Players:</h3>
+    </div>
+    {assignmentTiles}
+  </>
+  ) : null;
+
+  const assignmentForm = props.user ? (
+    <NewAssignmentForm squadId={id} addNewAssignment={addNewAssignment} />
+  ) : null;
 
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
     <div className="grid-container">
       <div className="squad-name text-center">
-        <h1>{squad.name}</h1>
-        <img className="squad-photo" src={squad.image}></img>
-        </div>
-        <div className="squad-player-list text-center">
+        <h1>{squadName}</h1>
+        <img className="squad-photo" src={squadImage}></img>
+      </div>
+      <div className="squad-player-list text-center">
         <h4>Positions</h4>
-        </div>
-      {assignmentTileComponents}
+      </div>
+      {assignmentSection}
       <div className="squad-show-position-form">{errorList}</div>
+      <h3>{assignmentForm}</h3>
+      <div className="assignment-section">{assignmentSection}</div>
     </div>
   );
 };

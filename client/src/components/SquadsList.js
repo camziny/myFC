@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SquadTile from "./SquadTile.js";
 import NewSquadForm from "./NewSquadForm.js";
+import { useParams } from "react-router-dom";
 
 const SquadsList = (props) => {
   const [squads, setSquads] = useState([]);
@@ -29,27 +30,16 @@ const SquadsList = (props) => {
   }, []);
 
   const squadTileComponents = squads.map((squadObject) => {
-    return (
-      <SquadTile
-        key={squadObject.id}
-        id={squadObject.id}
-        name={squadObject.name}
-      />
-    );
+    return <SquadTile key={`squadTile-${squadObject.id}`} {...squadObject} />;
   });
 
-  const squadForm = props.user ? (
-  <NewSquadForm addNewSquad={addNewSquad} />
-  ) : null
-
+  const squadForm = props.user ? <NewSquadForm addNewSquad={addNewSquad} /> : null;
 
   return (
     <div>
       <div className="dropdown">
         <button className="dropbtn">Featured Squads</button>
-        <div className="dropdown-content">
-          {squadTileComponents}
-        </div>
+        <div className="dropdown-content">{squadTileComponents}</div>
       </div>
       <div>{squadForm}</div>
     </div>

@@ -3,7 +3,7 @@ import ErrorList from "./layout/ErrorList";
 
 const EditAssignmentForm = (props) => {
   const [editAssignment, setEditAssignment] = useState({
-    position: props.position,
+    assignment: props.assignment,
   });
 
   const handleInputChange = (event) => {

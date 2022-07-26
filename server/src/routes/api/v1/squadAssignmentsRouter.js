@@ -7,22 +7,13 @@ import AssignmentSerializer from "../../../serializers/AssignmentSerializer.js";
 const squadAssignmentsRouter = new express.Router({ mergeParams: true });
 
 squadAssignmentsRouter.post("/", async (req, res) => {
-  const { st, lw, rw, cm, lm, rm, lcb, rcb, lb, rb, gk } = cleanUserInput(req.body);
+  const { name, position } = cleanUserInput(req.body);
   const { squadId } = req.params;
   const userId = req.user.id;
   try {
     const newAssignment = await Assignment.query().insertAndFetch({
-      st,
-      lw,
-      rw,
-      cm,
-      lm,
-      rm,
-      lcb,
-      rcb,
-      lb,
-      rb,
-      gk,
+      name,
+      position,
       squadId,
       userId,
     });

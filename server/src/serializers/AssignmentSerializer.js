@@ -1,6 +1,6 @@
 class AssignmentSerializer {
   static async getSummary(assignment) {
-    const allowedAttributes = ["id", "name", "position", "userId"];
+    const allowedAttributes = ["id", "name", "position", "playerId", "userId"];
     let serializedAssignment = {};
     for (const attribute of allowedAttributes) {
       serializedAssignment[attribute] = assignment[attribute];

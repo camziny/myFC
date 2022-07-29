@@ -1,5 +1,4 @@
 import express from "express";
-import objection from "objection";
 import { ValidationError } from "objection";
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { Squad } from "../../../models/index.js";
@@ -28,7 +27,6 @@ squadsRouter.get("/:id", async (req, res) => {
   try {
     const squad = await Squad.query().findById(id).throwIfNotFound();
     const serializedSquad = await SquadSerializer.getDetails(squad);
-    console.log(serializedSquad)
     return res.status(200).json({ squad: serializedSquad });
   } catch (error) {
     console.log(error)

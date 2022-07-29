@@ -11,7 +11,7 @@ class SquadSerializer {
   }
 
   static async getDetails(squad) {
-    const allowedAttributes = ["name", "image", "assignments"];
+    const allowedAttributes = ["name", "assignments", "image"];
     let serializedSquad = {};
     for (const attribute of allowedAttributes) {
       serializedSquad[attribute] = squad[attribute];

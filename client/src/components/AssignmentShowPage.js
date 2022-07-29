@@ -6,12 +6,13 @@ import translateServerErrors from "../services/translateServerErrors";
 
 const AssignmentShowPage = (props) => {
   const { id } = useParams();
+  const { playerId } = useParams()
   const [assignment, setAssignment] = useState([]);
   const [errors, setErrors] = useState([]);
 
   const getAssignment = async () => {
     try {
-      const response = await fetch(`/api/v1/assignments/${id}`);
+      const response = await fetch(`/api/v1/assignments/${playerId}`);
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);

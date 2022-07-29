@@ -7,18 +7,19 @@ import AssignmentSerializer from "../../../serializers/AssignmentSerializer.js";
 const squadAssignmentsRouter = new express.Router({ mergeParams: true });
 
 squadAssignmentsRouter.post("/", async (req, res) => {
-  const { name, position } = cleanUserInput(req.body);
+  const { name, position, playerId } = cleanUserInput(req.body);
   const { squadId } = req.params;
   const userId = req.user.id;
+
   try {
     const newAssignment = await Assignment.query().insertAndFetch({
       name,
       position,
+      playerId,
       squadId,
       userId,
     });
     const serializedAssignment = await AssignmentSerializer.getSummary(newAssignment);
-    console.log(serializedAssignment);
     return res.status(201).json({ assignment: serializedAssignment });
   } catch (error) {
     if (error instanceof ValidationError) {

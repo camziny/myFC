@@ -5,6 +5,7 @@ const PositionTile = ({
     id,
     name,
     position,
+    playerId,
     deletePosition,
     creatorId,
     curUserId,

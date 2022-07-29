@@ -25,7 +25,7 @@ const SquadAssignmentTile = ({
   return (
     <div className="radius bordered shadow card">
       <div className="card-divider align-center">
-      <Link to={`/assignments/${id}`}>
+      <Link to={`/assignments/${playerId}`}>
         <div className="card-section">
           <div className="playerName text-center">{name}</div>
           <div className="player-photo-wrapper text-center">

@@ -33,7 +33,7 @@ const SquadShowPage = (props) => {
       }
       const squadData = await response.json();
       console.log("squad below");
-      console.log(squadData);
+      console.log(squadData.squad);
       setSquad(squadData.squad);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -158,18 +158,14 @@ const SquadShowPage = (props) => {
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
-    <div className="grid-container">
-      <div className="squad-name text-center">
+    <div className="row">
+    <div className="squad-name text-center">
         <h1>{squadName}</h1>
         <img className="squad-photo" src={squadImage}></img>
       </div>
-      <div className="squad-player-list text-center">
-        <h4>Positions</h4>
-      </div>
-      {assignmentSection}
-      <div className="squad-show-position-form">{errorList}</div>
-      <h3>{assignmentForm}</h3>
-      <div className="assignment-section">{assignmentSection}</div>
+      <div>{errorList}</div>
+      <div>{assignmentSection}</div>
+      <div>{assignmentForm}</div>
     </div>
   );
 };

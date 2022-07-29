@@ -7,10 +7,11 @@ class Assignment extends Model {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name", "position", "squadId", "userId"],
+      required: ["name", "position", "playerId", "squadId", "userId"],
       properties: {
         name: { type: "string" },
-        position: { enum: ["st", "lw", "rw", "cm", "lm", "rm", "lcb", "rcb", "lb", "rb", "gk"] },
+        position: { type: "string" },
+        playerId: { type: ["string", "integer"] },
         squadId: { type: ["string", "integer"] },
         userId: { type: ["string", "integer"] },
       },

@@ -5,21 +5,7 @@ import ErrorList from "./layout/ErrorList";
 import PlayerTile from "./PlayerTile.js";
 
 const NewAssignmentForm = (props) => {
-  const [newAssignment, setNewAssignment] = useState({
-    position: {
-      st: 0,
-      lw: 0,
-      rw: 0,
-      cm: 0,
-      lm: 0,
-      rm: 0,
-      lcb: 0,
-      rcb: 0,
-      lb: 0,
-      rb: 0,
-      gk: 0,
-    },
-  });
+  const [newAssignment, setNewAssignment] = useState({});
 
   const [errors, setErrors] = useState({});
 
@@ -80,7 +66,6 @@ const NewAssignmentForm = (props) => {
       } else {
         const body = await response.json();
         props.addNewAssignment(body.assignment);
-        clearForm();
       }
     } catch (error) {
       console.error(error.message);
@@ -90,22 +75,34 @@ const NewAssignmentForm = (props) => {
   const [selectedPlayer, setSelectedPlayer] = useState({
     id: 0,
     name: "",
+    position: "",
+    playerId: 0,
   });
 
-  const handlePlayerSelection = (id, name) => {
+  const handlePlayerSelection = (id, name, position, playerId) => {
     if (id === selectedPlayer) {
       setSelectedPlayer({
         id: 0,
         name: "",
+        position: "",
+        playerId: 0
       });
     } else {
-      setSelectedPlayer({ id, name });
+      setSelectedPlayer({ id, name, position, playerId });
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     postAssignment(newAssignment);
+  };
+
+  const handleSquadAssignment = (event) => {
+    console.log(event);
+    if (selectedPlayer !== null) {
+      console.log(selectedPlayer);
+      setNewAssignment(selectedPlayer);
+    }
   };
 
   const playerTileComponents = team.map((playerObject) => {
@@ -127,21 +124,14 @@ const NewAssignmentForm = (props) => {
         redCards={playerObject.statistics[0].cards.red}
         handlePlayerAdd={handlePlayerSelection}
         isSelected={playerObject.id === selectedPlayer.id}
+        playerId={playerObject.player.id}
       />
     );
   });
 
-  const handleSquadAssignment = (event) => {
-    console.log(event);
-    if (selectedPlayer !== null) {
-      setNewAssignment({
-        ...newAssignment,
-        position: { ...newAssignment.position, [event.currentTarget.name]: selectedPlayer },
-      });
-    }
-  };
   return (
-    <div className="grid-y">
+    <div className="row">
+    <div className="column">
       <h3>Add Players</h3>
       <form className="" onSubmit={handleSubmit}>
         <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
@@ -149,15 +139,15 @@ const NewAssignmentForm = (props) => {
           <div className="cell">
             <input
               type="Add"
-              name="st"
-              placeholder="Striker"
+              name="name"
+              placeholder="Add Player"
               className="button small warning"
               href="#"
               onClick={handleSquadAssignment}
-              value={newAssignment.position.st.name ? newAssignment.position.st.name : "Striker"}
+              value={newAssignment.name ? newAssignment.name : "Add Player"}
             />
           </div>
-          <div className="cell">
+          {/* <div className="cell">
             <input
               type="Add"
               className="button small warning"
@@ -186,7 +176,9 @@ const NewAssignmentForm = (props) => {
             name="cm"
             placeholder="Center Midfielder"
             onClick={handleSquadAssignment}
-            value={newAssignment.position.cm.name ? newAssignment.position.cm.name : "Center Midfielder"}
+            value={
+              newAssignment.position.cm.name ? newAssignment.position.cm.name : "Center Midfielder"
+            }
           />
         </div>
         <div className="cell">
@@ -197,7 +189,9 @@ const NewAssignmentForm = (props) => {
             name="lm"
             placeholder="Left Midfielder"
             onClick={handleSquadAssignment}
-            value={newAssignment.position.lm.name ? newAssignment.position.lm.name : "Left Midfielder"}
+            value={
+              newAssignment.position.lm.name ? newAssignment.position.lm.name : "Left Midfielder"
+            }
           />
         </div>
         <div className="cell">
@@ -208,7 +202,9 @@ const NewAssignmentForm = (props) => {
             name="rm"
             placeholder="Right MidFielder"
             onClick={handleSquadAssignment}
-            value={newAssignment.position.rm.name ? newAssignment.position.rm.name : "Right Midfielder"}
+            value={
+              newAssignment.position.rm.name ? newAssignment.position.rm.name : "Right Midfielder"
+            }
           />
         </div>
         <div className="cell">
@@ -219,7 +215,9 @@ const NewAssignmentForm = (props) => {
             name="lcb"
             placeholder="Left Center Back"
             onClick={handleSquadAssignment}
-            value={newAssignment.position.lcb.name ? newAssignment.position.lcb.name : "Left Center Back"}
+            value={
+              newAssignment.position.lcb.name ? newAssignment.position.lcb.name : "Left Center Back"
+            }
           />
         </div>
         <div className="cell">
@@ -230,7 +228,11 @@ const NewAssignmentForm = (props) => {
             name="rcb"
             placeholder="Right Center Back"
             onClick={handleSquadAssignment}
-            value={newAssignment.position.rcb.name ? newAssignment.position.rcb.name : "Right Center Back"}
+            value={
+              newAssignment.position.rcb.name
+                ? newAssignment.position.rcb.name
+                : "Right Center Back"
+            }
           />
         </div>
         <div className="cell">
@@ -265,11 +267,12 @@ const NewAssignmentForm = (props) => {
             placeholder="GoalKeeper"
             onClick={handleSquadAssignment}
             value={newAssignment.position.gk.name ? newAssignment.position.gk.name : "Goal Keeper"}
-          />
+          /> */}
         </div>
         <input className="button" type="submit" value="Submit" />
       </form>
-      <div className="grid y">
+      </div>
+      <div className="column">
         <table>{playerTileComponents}</table>
       </div>
     </div>

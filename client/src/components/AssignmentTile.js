@@ -4,7 +4,9 @@ import EditAssignmentForm from "./EditAssignmentForm.js"
 
 const AssignmentTile = ({
   id,
+  name,
   position,
+  playerId,
   deleteAssignment,
   creatorId,
   curUserId,
@@ -54,20 +56,19 @@ const AssignmentTile = ({
 
   return (
       <div className="grid-container">
-        <Link to={`/assignments/${id}`}>
-          <div className="grid-x grid-margin-x small-up-2 medium-up-3 align-center">
+        <div className="row">
+        <Link to={`/assignments/${playerId}`}>
+          <div className="row">
             <div className="cell">
-          <div className="card">
-            <div className="card-section">
-              <h4>{position}</h4>
+              <h4>{name}</h4>
+              <p>{position}</p>
               <div>
                 {buttons}
               </div>
               </div>
           </div>
-          </div>
-          </div>
         </Link>
+        </div>
         </div>
   );
 };

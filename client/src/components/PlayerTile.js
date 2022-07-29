@@ -6,6 +6,7 @@ const PlayerTile = ({
   name,
   nationality,
   position,
+  playerId,
   photo,
   teamLogo,
   goals,
@@ -45,7 +46,7 @@ const PlayerTile = ({
                 <button
                   onClick={() => {
                     toggle();
-                    handlePlayerAdd(id, name);
+                    handlePlayerAdd(id, name, position, playerId);
                   }}
                   className={"toggle-button" + (selected ? "toggle-selected" : "")}
                 >

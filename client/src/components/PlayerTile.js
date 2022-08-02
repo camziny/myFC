@@ -50,7 +50,7 @@ const PlayerTile = ({
                   }}
                   className={"toggle-button" + (selected ? "toggle-selected" : "")}
                 >
-                  {selected ? "Player Selected" : "Add Player"}
+                  {selected ? "Player Selected" : "Select Player"}
                 </button>
               </div>
               <div></div>

@@ -158,14 +158,16 @@ const SquadShowPage = (props) => {
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
   return (
-    <div className="row">
-    <div className="squad-name text-center">
+    <div className="container">
+    <div className="grid-1 callout primary text-center">
         <h1>{squadName}</h1>
-        <img className="squad-photo" src={squadImage}></img>
+        <img className="squad-image" src={squadImage}></img>
       </div>
       <div>{errorList}</div>
-      <div>{assignmentSection}</div>
-      <div>{assignmentForm}</div>
+      <div className="grid-4 callout alert">
+        <div className="squad-player-table">
+        <table>{assignmentSection}</table></div></div>
+      <div className="grid-3 callout success">{assignmentForm}</div>
     </div>
   );
 };

@@ -130,13 +130,13 @@ const NewAssignmentForm = (props) => {
   });
 
   return (
-    <div className="row">
-    <div className="column">
+    <div>
+    <div>
       <h3>Add Players</h3>
       <form className="" onSubmit={handleSubmit}>
         <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
-        <div className="cell small-6 medium-8 small-11">
-          <div className="cell">
+        <div>
+          <div>
             <input
               type="Add"
               name="name"
@@ -144,7 +144,7 @@ const NewAssignmentForm = (props) => {
               className="button small warning"
               href="#"
               onClick={handleSquadAssignment}
-              value={newAssignment.name ? newAssignment.name : "Add Player"}
+              value={newAssignment.name ? newAssignment.name : "Confirm Player"}
             />
           </div>
           {/* <div className="cell">
@@ -272,8 +272,8 @@ const NewAssignmentForm = (props) => {
         <input className="button" type="submit" value="Submit" />
       </form>
       </div>
-      <div className="column">
-        <table>{playerTileComponents}</table>
+      <div>
+        <table className="player-table-scroll">{playerTileComponents}</table>
       </div>
     </div>
   );

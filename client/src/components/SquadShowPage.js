@@ -60,6 +60,7 @@ const SquadShowPage = (props) => {
         });
         setErrors({});
         setSquad({ ...squad, assignments: filteredAssignments });
+        console.log(squad)
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -132,7 +133,7 @@ const SquadShowPage = (props) => {
         userLoggedIn={userLoggedIn}
       />
     );
-  });
+  })
 
   const squadName = squad.name ? <div className="squad-show-name">{squad.name}</div> : null;
 

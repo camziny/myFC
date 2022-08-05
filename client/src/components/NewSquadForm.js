@@ -229,7 +229,7 @@ const NewSquadForm = (props) => {
 
             <Dropzone onDrop={handleImageUpload}>
               {({ getRootProps, getInputProps }) => (
-                <div className="cell medium-8">
+                <div className="cell">
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
                     <input
@@ -242,7 +242,9 @@ const NewSquadForm = (props) => {
                 </div>
               )}
             </Dropzone>
+            <div>
             <img src={uploadedImage.preview} />
+            </div>
             <input className="button" type="submit" />
           </form>
         </div>

@@ -1,6 +1,6 @@
 import express from "express";
 import objection from "objection";
-// import cleanUserInput from "../../../services/cleanUserInput.js";
+import cleanUserInput from "../../../services/cleanUserInput.js";
 import { ValidationError } from "objection";
 import RapidApi from "../../../apiClient/RapidApi.js";
 import { Assignment } from "../../../models/index.js";
@@ -47,6 +47,7 @@ assignmentsRouter.delete("/:id", async (req, res) => {
       res.status(401).json({ "AuthorizationError:": "User not authorized to delete assignment" });
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({ errors: error });
   }
 });

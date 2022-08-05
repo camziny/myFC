@@ -59,8 +59,8 @@ const AssignmentShowPage = (props) => {
 
   return (
  <div>
-     {squadAssignmentTileComponents}
-     </div>
+    {squadAssignmentTileComponents}
+    </div>
   );
 };
 

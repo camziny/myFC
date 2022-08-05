@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import PlayerTile from "./PlayerTile.js";
+import PlayerStatsTile from "./PlayerStatsTile.js";
 import ReactPaginate from "react-paginate";
+import BarChart from "./BarChart.js";
+import ColumnChart from "./ColumnChart.js";
 
 
 import ErrorList from "./layout/ErrorList.js";
@@ -13,6 +15,14 @@ const TeamsShowPage = (props) => {
   const [team, setTeam] = useState([]);
   const [errors, setErrors] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [showBarChart, setShowBarChart] = useState(false)
+  const [showColumnChart, setShowColumnChart] = useState(false)
+  const [selectedPlayer, setSelectedPlayer] = useState({
+    id: 0,
+    goals: 0,
+    assists: 0
+  })
+
 
   const getTeam = async () => {
     try {
@@ -38,12 +48,17 @@ const TeamsShowPage = (props) => {
     getTeam(selected);
   };
 
-  const playerTileComponents = team.map((playerObject) => {
+
+  const playerStatsTileComponents = team.map((playerObject) => {
     return (
-      <PlayerTile
+      <PlayerStatsTile
         key={playerObject.player.id}
         id={playerObject.player.id}
         name={playerObject.player.name}
+        age={playerObject.player.age}
+        weight={playerObject.player.weight}
+        appearances={playerObject.statistics[0].games.appearances}
+        minutes={playerObject.statistics[0].games.minutes}
         nationality={playerObject.player.nationality}
         position={playerObject.statistics[0].games.position}
         photo={playerObject.player.photo}
@@ -54,17 +69,13 @@ const TeamsShowPage = (props) => {
         conceded={playerObject.statistics[0].goals.conceded}
         yellowCards={playerObject.statistics[0].cards.yellow}
         redCards={playerObject.statistics[0].cards.red}
-        playerChart={[playerObject.statistics[0].goals.total, playerObject.statistics[0].goals.assists]}
       />
     );
   });
-  
-  
-
 
   return (
-    <div>
-      {playerTileComponents}
+    <div className="callout primary">
+      {playerStatsTileComponents}
       <div className="pagination-section">      
       <ReactPaginate
         className="paginationButtons"
@@ -78,7 +89,5 @@ const TeamsShowPage = (props) => {
       />
       </div>
     </div>
-  );
-};
-
+  )}
 export default TeamsShowPage;

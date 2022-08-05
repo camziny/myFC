@@ -8,6 +8,6 @@ class AssignmentSerializer {
     serializedAssignment.user = await assignment.$relatedQuery("user").email;
     return serializedAssignment;
   }
-}
+  }
 
 export default AssignmentSerializer;

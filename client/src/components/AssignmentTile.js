@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import EditAssignmentForm from "./EditAssignmentForm.js"
+import EditAssignmentForm from "./EditAssignmentForm.js";
 
 const AssignmentTile = ({
   id,
@@ -13,63 +13,64 @@ const AssignmentTile = ({
   patchAssignment,
   errors,
   userLoggedIn,
-  creator
+  creator,
 }) => {
   const [isBeingEdited, setIsBeingEdited] = useState(false);
 
-  const buttons = 
-  creatorId === curUserId ? (
-    <div className="review-edit-delete">
-      <input
-      className="button"
-      type="button"
-      value="Edit Player"
-      onClick={() => {
-        toggleEdit()
-      }}
-      />
-      <input 
-      className="button"
-      type="button"
-      value="Delete Player"
-      onClick={() => {
-        deleteAssignment(id)
-      }}
-      />
-    </div>
-  ) : null
+  const buttons =
+    creatorId === curUserId ? (
+      <div className="review-edit-delete">
+        <input
+          className="button"
+          type="button"
+          value="Edit Player"
+          onClick={() => {
+            toggleEdit();
+          }}
+        />
+        <input
+          className="button"
+          type="button"
+          value="Delete Player"
+          onClick={() => {
+            deleteAssignment(id);
+          }}
+        />
+      </div>
+    ) : null;
 
   const toggleEdit = () => {
-    setIsBeingEdited(!isBeingEdited)
-  }
+    setIsBeingEdited(!isBeingEdited);
+  };
   if (isBeingEdited) {
     return (
       <EditAssignmentForm
-      patchAssignment={patchAssignment}
-      id={id}
-      position={position}
-      toggleEdit={toggleEdit}
-      errors={errors}
+        patchAssignment={patchAssignment}
+        id={id}
+        name={name}
+        position={position}
+        playerId={playerId}
+        toggleEdit={toggleEdit}
+        errors={errors}
       />
-    )
+    );
   }
 
   return (
-      <div className="grid-container">
-        <div className="row">
+    <div className="grid-container">
+      <div className="row">
         <Link to={`/assignments/${playerId}`}>
           <div className="row">
             <div className="cell">
               <h4>{name}</h4>
               <p>{position}</p>
-              <div>
-                {buttons}
-              </div>
-              </div>
+              <div></div>
+            </div>
           </div>
         </Link>
-        </div>
-        </div>
+        {buttons}
+      </div>
+    </div>
   );
 };
 

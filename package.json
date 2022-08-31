@@ -18,9 +18,10 @@
   },
   "engines": {
     "node": "^14.19",
-    "yarn": "^1.22.17"
+    "yarn": "^1.22.18"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "react-google-charts": "^4.0.0",
     "react-paginate": "^8.1.3"
   },

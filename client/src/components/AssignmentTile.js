@@ -20,18 +20,18 @@ const AssignmentTile = ({
   const buttons =
     creatorId === curUserId ? (
       <div className="review-edit-delete">
-        <input
+        {/* <input
           className="button"
           type="button"
           value="Edit Player"
           onClick={() => {
             toggleEdit();
           }}
-        />
+        /> */}
         <input
           className="button"
           type="button"
-          value="Delete Player"
+          value="Delete"
           onClick={() => {
             deleteAssignment(id);
           }}

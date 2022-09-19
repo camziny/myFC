@@ -6,7 +6,7 @@ import uploadImage from "../../../services/UploadImage.js";
 import SquadSerializer from "../../../serializers/SquadSerializer.js";
 import squadAssignmentsRouter from "./squadAssignmentsRouter.js";
 
-const squadsRouter = new express.Router({ mergeParams: true });
+const squadsRouter = new express.Router();
 
 squadsRouter.use("/:squadId/assignments", squadAssignmentsRouter)
 

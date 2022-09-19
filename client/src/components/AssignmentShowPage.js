@@ -12,14 +12,14 @@ const AssignmentShowPage = (props) => {
 
   const getAssignment = async () => {
     try {
-      const response = await fetch(`/api/v1/assignments/${playerId}`);
+      const response = await fetch(`/api/v1/assignments/${id}`);
       if (!response.ok) {
         const errorMessage = `{response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
       const assignmentData = await response.json();
-      console.log(assignmentData)
+      console.log(`data: ${assignmentData}`)
       setAssignment(assignmentData);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);

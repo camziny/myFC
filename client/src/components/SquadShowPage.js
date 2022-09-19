@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import translateServerErrors from "../services/translateServerErrors.js";
 import ErrorList from "./layout/ErrorList.js";
 import AssignmentTile from "./AssignmentTile.js";
 import NewAssignmentForm from "./NewAssignmentForm.js";
-import AssignmentShowPage from "./AssignmentShowPage.js"
 
 const SquadShowPage = (props) => {
   const { id } = useParams();
@@ -32,8 +30,6 @@ const SquadShowPage = (props) => {
         throw error;
       }
       const squadData = await response.json();
-      console.log("squad below");
-      console.log(squadData.squad);
       setSquad(squadData.squad);
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -42,7 +38,7 @@ const SquadShowPage = (props) => {
 
   const deleteAssignment = async (assignmentId) => {
     try {
-      const response = await fetch(`api/v1/assignments/${assignmentId}`, {
+      const response = await fetch(`/api/v1/assignments/${assignmentId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });
@@ -60,7 +56,6 @@ const SquadShowPage = (props) => {
         });
         setErrors({});
         setSquad({ ...squad, assignments: filteredAssignments });
-        console.log(squad)
       }
     } catch (error) {
       console.error(`Error in fetch: ${error.message}`);
@@ -112,7 +107,6 @@ const SquadShowPage = (props) => {
   };
 
   const assignmentTiles = squad.assignments.map((assignmentObject) => {
-    console.log(assignmentObject)
     let curUserId = null;
     let userLoggedIn = false;
     if (props.user) {
@@ -145,9 +139,10 @@ const SquadShowPage = (props) => {
 
   const assignmentSection = assignmentTiles.length ? (
     <>
-    <div className="squad-assignment-section">
+    <table className="squad-assignment-section">
       <h3>{squad.name} Players:</h3>
-    </div>
+      <p>(Click on a player to view their stats)</p>
+    </table>
     {assignmentTiles}
   </>
   ) : null;
@@ -160,15 +155,15 @@ const SquadShowPage = (props) => {
 
   return (
     <div className="container">
-    <div className="grid-1 callout primary text-center">
+    <div className="grid-1 text-center">
         <h1>{squadName}</h1>
-        <img className="squad-image" src={squadImage}></img>
+          <img src={squad.image} />
       </div>
       <div>{errorList}</div>
-      <div className="grid-4 callout alert">
+      <div className="grid-4">
         <div className="squad-player-table">
-        <table>{assignmentSection}</table></div></div>
-      <div className="grid-3 callout success">{assignmentForm}</div>
+        <td>{assignmentSection}</td></div></div>
+      <div className="grid-3">{assignmentForm}</div>
     </div>
   );
 };

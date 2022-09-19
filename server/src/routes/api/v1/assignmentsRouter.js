@@ -1,5 +1,4 @@
 import express from "express";
-import objection from "objection";
 import cleanUserInput from "../../../services/cleanUserInput.js";
 import { ValidationError } from "objection";
 import RapidApi from "../../../apiClient/RapidApi.js";
@@ -22,11 +21,12 @@ assignmentsRouter.get("/", async (req, res) => {
 });
 
 assignmentsRouter.get("/:id", async (req, res) => {
-  const { playerId } = req.params;
+  const { id } = req.params;
   try {
-    const assignment = await RapidApi.getAssignments({ assignmentId: playerId });
-    console.log(assignment)
+    const assignment = await RapidApi.getAssignments({ assignmentId: id });
     const assignmentsData = JSON.parse(assignment);
+    console.log(assignmentsData)
+    console.log(id)
     return res
       .set({ "Content-Type": "application/json" })
       .status(200)

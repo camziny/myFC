@@ -150,14 +150,14 @@ const NewAssignmentForm = (props) => {
                 type="Add"
                 name="name"
                 placeholder="Add Player"
-                className={"button small warning"}
+                className={"new-assignment-button"}
                 href="#"
                 onClick={handleSquadAssignment}
                 value={newAssignment.name ? newAssignment.name : "Confirm Player"}
               />
             </div>
           </div>
-          <input className="button" type="submit" value="Submit" />
+          <input className="new-assignment-button" type="submit" value="Submit" />
         </form>
       </div>
       <div>

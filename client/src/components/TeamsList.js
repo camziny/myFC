@@ -39,7 +39,7 @@ const TeamsList = () => {
   return (
     <div className="teamsListBackground">
       <div className="teamsList">
-        <div className="teamsListHeader">Premier League Teams</div>
+        <div className="teams-list-header">Premier League Teams</div>
         {teamTileComponents}
       </div>
     </div>

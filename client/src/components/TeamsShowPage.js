@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PlayerStatsTile from "./PlayerStatsTile.js";
 import ReactPaginate from "react-paginate";
-import BarChart from "./BarChart.js";
-import ColumnChart from "./ColumnChart.js";
-
-
-import ErrorList from "./layout/ErrorList.js";
-
+import ErrorList from "./layout/ErrorList.js"
 import translateServerErrors from "../services/translateServerErrors.js";
 
 const TeamsShowPage = (props) => {

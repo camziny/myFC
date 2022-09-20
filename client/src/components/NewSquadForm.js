@@ -76,8 +76,8 @@ const NewSquadForm = (props) => {
   };
 
   return (
-    <div className="holy-grail-grid">
       <div className="holy-grail-header">
+      <UserSquads />
         <div className="squad-form-header">
           Create a Squad
           <div className="squad-form-image">
@@ -121,8 +121,6 @@ const NewSquadForm = (props) => {
           </form>
         </div>
       </div>
-      <UserSquads />
-    </div>
   );
 };
 

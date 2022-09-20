@@ -147,15 +147,6 @@ const SquadShowPage = (props) => {
   </>
   ) : null;
 
-  // const addAssignments = NewAssignmentForm.map((assignmentFormObject) => {
-  //   let curUserId = null
-  //   let userLoggedIn = false
-  //   if (props.user) {
-  //     curUserId = props.user.id
-  //     userLoggedIn = true
-  //   }
-  // })
-
   const assignmentForm = props.user ? (
     <NewAssignmentForm squadId={id} addNewAssignment={addNewAssignment} creatorId={squad.userId} curUserId={props.user.id} />
     ) : null;

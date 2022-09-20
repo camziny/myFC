@@ -7,11 +7,12 @@ class SquadSerializer {
     for (const attribute of allowedAttributes) {
       serializedSquad[attribute] = squad[attribute];
     }
+    serializedSquad.user = await squad.$relatedQuery("user").email;
     return serializedSquad;
   }
 
   static async getDetails(squad) {
-    const allowedAttributes = ["name", "assignments", "image"];
+    const allowedAttributes = ["name", "assignments", "image", "userId"];
     let serializedSquad = {};
     for (const attribute of allowedAttributes) {
       serializedSquad[attribute] = squad[attribute];

@@ -22,7 +22,7 @@
   "version": "0.0.1",
   "name": "myFC-server",
   "engines": {
-    "node": "^14.19"
+    "node": "^14.19.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

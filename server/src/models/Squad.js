@@ -12,12 +12,13 @@ class Squad extends Model {
       properties: {
         name: { type: "string", minLength: 1 },
         image: { type: "string" },
+        userId: { type: ["string", "integer"] },
       },
     };
   }
 
   static get relationMappings() {
-    const { Assignment } = require("./index.js");
+    const { Assignment, User } = require("./index.js");
     return {
       assignments: {
         relation: Model.HasManyRelation,
@@ -25,6 +26,14 @@ class Squad extends Model {
         join: {
           from: "squads.id",
           to: "assignments.squadId",
+        },
+      },
+      user: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: "squads.userId",
+          to: "users.id",
         },
       },
     };

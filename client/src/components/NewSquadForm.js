@@ -6,7 +6,6 @@ import Dropzone from "react-dropzone";
 import UserSquads from "./UserSquads";
 
 const NewSquadForm = (props) => {
-  const { id } = useParams()
   const [newSquad, setNewSquad] = useState({
     name: "",
     image: {},
@@ -32,7 +31,6 @@ const NewSquadForm = (props) => {
         if (response.status === 422) {
           const body = await response.json();
           const newErrors = translateServerErrors(body.errors.data);
-          console.log(body.errors);
           return setErrors(newErrors);
         }
         throw new Error(`${response.status} (${response.statusText})`);

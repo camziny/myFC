@@ -147,9 +147,18 @@ const SquadShowPage = (props) => {
   </>
   ) : null;
 
+  // const addAssignments = NewAssignmentForm.map((assignmentFormObject) => {
+  //   let curUserId = null
+  //   let userLoggedIn = false
+  //   if (props.user) {
+  //     curUserId = props.user.id
+  //     userLoggedIn = true
+  //   }
+  // })
+
   const assignmentForm = props.user ? (
-    <NewAssignmentForm squadId={id} addNewAssignment={addNewAssignment} />
-  ) : null;
+    <NewAssignmentForm squadId={id} addNewAssignment={addNewAssignment} creatorId={squad.userId} curUserId={props.user.id} />
+    ) : null;
 
   const errorList = Object.keys(errors) ? <ErrorList errors={errors} /> : null;
 
@@ -157,7 +166,9 @@ const SquadShowPage = (props) => {
     <div className="container">
     <div className="grid-1 text-center">
         <h1>{squadName}</h1>
+        <div className="squad-show-page-image">
           <img src={squad.image} />
+          </div>
       </div>
       <div>{errorList}</div>
       <div className="grid-4">

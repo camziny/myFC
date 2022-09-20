@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AssignmentSerializer from "../../../server/src/serializers/AssignmentSerializer.js";
 import translateServerErrors from "./../services/translateServerErrors.js";
 import DropDownSelect from "./DropDownSelect.js";
 import ErrorList from "./layout/ErrorList";
@@ -48,7 +49,7 @@ const NewAssignmentForm = (props) => {
   };
 
   const postAssignment = async () => {
-    const { squadId } = props;
+    const { squadId } = props
     try {
       const response = await fetch(`/api/v1/squads/${squadId}/assignments`, {
         method: "POST",
@@ -138,31 +139,41 @@ const NewAssignmentForm = (props) => {
     );
   });
 
+  
+  const button =
+  props.creatorId === props.curUserId ? (
+    <div>
+    <div>
+      <h3>Add Players</h3>
+      <form className="" onSubmit={handleSubmit}>
+        <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
+        <div>
+          <div>
+            <input
+              type="Add"
+              name="name"
+              placeholder="Add Player"
+              className={"new-assignment-button"}
+              href="#"
+              onClick={handleSquadAssignment}
+              value={newAssignment.name ? newAssignment.name : "Confirm Player"}
+            />
+          </div>
+        </div>
+        <div>
+    <input className="new-assignment-button" type="submit" value="Submit" />
+  </div>
+      </form>
+    </div>
+    <div>
+      <table className="player-table-scroll">{playerTileComponents}</table>
+    </div>
+  </div>
+) : null
+
   return (
     <div>
-      <div>
-        <h3>Add Players</h3>
-        <form className="" onSubmit={handleSubmit}>
-          <DropDownSelect getTeam={getTeam} listItems={teams} setSelectedTeam={setSelectedTeamId} />
-          <div>
-            <div>
-              <input
-                type="Add"
-                name="name"
-                placeholder="Add Player"
-                className={"new-assignment-button"}
-                href="#"
-                onClick={handleSquadAssignment}
-                value={newAssignment.name ? newAssignment.name : "Confirm Player"}
-              />
-            </div>
-          </div>
-          <input className="new-assignment-button" type="submit" value="Submit" />
-        </form>
-      </div>
-      <div>
-        <table className="player-table-scroll">{playerTileComponents}</table>
-      </div>
+  {button}
     </div>
   );
 };

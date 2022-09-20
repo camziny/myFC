@@ -642,6 +642,13 @@ li img:hover {
   font-weight: bold;
 }
 
+.squad-show-page-image {
+  max-width: 200px;
+  max-height: 200px;
+  display: inline-flex;
+  flex-direction: column;
+}
+
 @media only screen and (max-width: 1200px) {
   .top-bar{
     display: flex;

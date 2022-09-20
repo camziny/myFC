@@ -36,7 +36,7 @@ class User extends uniqueFunc(Model) {
   }
 
   static get relationMappings() {
-    const { Assignment } = require("./index.js")
+    const { Assignment, Squad } = require("./index.js");
     return {
       assignments: {
         relation: Model.HasManyRelation,
@@ -46,7 +46,15 @@ class User extends uniqueFunc(Model) {
           to: "assignments.userId",
         },
       },
-    }
+      squads: {
+        relation: Model.HasManyRelation,
+        modelClass: Squad,
+        join: {
+          from: "users.id",
+          to: "assignments.userId",
+        },
+      },
+    };
   }
 
   $formatJson(json) {

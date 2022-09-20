@@ -8,16 +8,17 @@ import squadAssignmentsRouter from "./squadAssignmentsRouter.js";
 
 const squadsRouter = new express.Router();
 
-squadsRouter.use("/:squadId/assignments", squadAssignmentsRouter)
+squadsRouter.use("/:squadId/assignments", squadAssignmentsRouter);
 
 squadsRouter.get("/", async (req, res) => {
   try {
     const squads = await Squad.query();
     const serializedSquads = await Promise.all(
-      squads.map(async squad => await SquadSerializer.getSummary(squad))
+      squads.map(async (squad) => await SquadSerializer.getSummary(squad))
     );
     return res.status(200).json({ squads: serializedSquads });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });
@@ -29,7 +30,7 @@ squadsRouter.get("/:id", async (req, res) => {
     const serializedSquad = await SquadSerializer.getDetails(squad);
     return res.status(200).json({ squad: serializedSquad });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ errors: error });
   }
 });
@@ -37,10 +38,12 @@ squadsRouter.get("/:id", async (req, res) => {
 squadsRouter.post("/", uploadImage.single("image"), async (req, res) => {
   const cleanedFormInput = cleanUserInput(req.body);
   const { name } = cleanedFormInput;
+  const userId = req.user.id;
   try {
     const newSquad = await Squad.query().insertAndFetch({
       name,
       image: req.file.location,
+      userId,
     });
     return res.status(201).json({ squad: newSquad });
   } catch (error) {

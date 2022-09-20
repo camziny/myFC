@@ -8,7 +8,7 @@
   "name": "myFC-client",
   "version": "0.0.1",
   "engines": {
-    "node": "^14.19"
+    "node": "^14.19.3"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "~16.13",

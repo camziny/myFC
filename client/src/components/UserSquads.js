@@ -32,10 +32,10 @@ const UserSquads = (props) => {
   });
 
   return (
-    <div className="user-squads">
-      <h2>Existing Squads</h2>
-     {squadTileComponents}
-    </div>
+<div className="dropdown">
+        <button className="dropbtn">Featured Squads</button>
+        <div className="dropdown-content">{squadTileComponents}</div>
+      </div>
   );
 };
 

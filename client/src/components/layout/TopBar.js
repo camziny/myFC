@@ -19,14 +19,14 @@ const TopBar = ({ user }) => {
   const squadCreate = [
     <li key="create-squad">
       <NewSquadForm />
-    </li>
-  ]
+    </li>,
+  ];
 
   const teamList = [
     <li key="create-squad">
       <TeamsList />
-    </li>
-  ]
+    </li>,
+  ];
 
   const authenticatedListItems = [
     <li key="sign-out">
@@ -43,6 +43,7 @@ const TopBar = ({ user }) => {
             <Link to="/">Home</Link>
             <Link to="/squads">Create Squad</Link>
             <Link to="/teams">Premier League Teams</Link>
+            <Link to="/worldCupTeams">World Cup 2022</Link>
           </li>
         </ul>
       </div>

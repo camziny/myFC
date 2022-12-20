@@ -645,35 +645,67 @@ li img:hover {
   flex-direction: column;
 }
 
-  .squad-list-header {
-    font-weight: bold;
-    font-size: 36px;
-    margin-top: 20px;
-  }
+.squad-list-header {
+  font-weight: bold;
+  font-size: 36px;
+  margin-top: 20px;
+}
 
-  .squad-tiles {
-    box-shadow: inset 0 0 0 0 #586f6b;
-    color: #586f6b;
-    transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    border-radius: 10px;
-    font-size: 24px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .squad-tiles a {
-    box-shadow: inset 0 0 0 0 #586f6b;
-    color: #586f6b;
-    transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    border-radius: 10px;
-    font-size: 24px;
-  }
+.squad-tiles {
+  box-shadow: inset 0 0 0 0 #586f6b;
+  color: #586f6b;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 10px;
+  font-size: 24px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-  .squad-tiles a:hover {
-    box-shadow: inset 300px 0 0 0 #bbb;
-    color: black;
-  }
+.squad-tiles a {
+  box-shadow: inset 0 0 0 0 #586f6b;
+  color: #586f6b;
+  transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 10px;
+  font-size: 24px;
+}
 
+.squad-tiles a:hover {
+  box-shadow: inset 300px 0 0 0 #bbb;
+  color: black;
+}
+
+.groups-list-header {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.groupsList {
+  display: inline-block;
+  background-color: #586f6b;
+  text-align: center;
+  color: #ddd5d0;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 16px;
+  border-color: #eee #ddd #bbb;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  margin: 10px 5px;
+  padding: 0 28px 28px 28px;
+  max-width: 300px;
+  width: 30%;
+}
+
+.groupsList h3 {
+  color: black;
+  background-color: #ddd5d0;
+  margin-top: 10px;
+  border-radius: 10px;
+}
 
 @media only screen and (max-width: 1200px) {
   .top-bar {

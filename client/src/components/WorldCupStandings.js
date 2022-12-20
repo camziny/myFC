@@ -257,8 +257,7 @@ const WorldCupStandings = () => {
   });
 
   return (
-    <div>
-      <div className="groups-list-header">2022 World Cup Standings</div>
+    <div className="groups-list-container">
       <div className="groupsList">
         <h3>Group A</h3>
         {groupAComponents}

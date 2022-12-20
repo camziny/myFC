@@ -121,7 +121,7 @@
 
 .callout {
   background-color: #e5e4e2;
-  border-radius: 10px;
+  border-radius: 25px;
 }
 
 .playerTile {
@@ -675,9 +675,8 @@ li img:hover {
 }
 
 .groups-list-header {
-  text-align: center;
   font-size: 28px;
-  margin-bottom: 10px;
+  display: inline-flex;
 }
 
 .groupsList {
@@ -698,6 +697,13 @@ li img:hover {
   padding: 0 28px 28px 28px;
   max-width: 300px;
   width: 30%;
+  margin-top: 20px;
+}
+
+.group-team-logo {
+  background-color: #e5e4e2;
+  width: 120px;
+  height: 80px;
 }
 
 .groupsList h3 {
@@ -707,6 +713,37 @@ li img:hover {
   border-radius: 10px;
 }
 
+.groups-list-container {
+  display: flex;
+  align-items: flex;
+  color: #ddd5d0;
+}
+
+.group-tile-container {
+  background-color: white;
+}
+
+.rank {
+  margin-top: 2px;
+  padding: 1px;
+  color: black;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  background-color: #e5e4e2;
+}
+
+.points {
+  padding: 1px;
+  color: black;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  background-color: #e5e4e2;
+}
+
+.goalsDiff {
+  padding: 1px;
+  color: black;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  background-color: #e5e4e2;
+}
 @media only screen and (max-width: 1200px) {
   .top-bar {
     display: flex;

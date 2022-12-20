@@ -43,7 +43,8 @@ const TopBar = ({ user }) => {
             <Link to="/">Home</Link>
             <Link to="/squads">Create Squad</Link>
             <Link to="/teams">Premier League Teams</Link>
-            <Link to="/worldCupTeams">World Cup 2022</Link>
+            <Link to="/worldCupTeams">World Cup Teams</Link>
+            <Link to="/worldCupStandings">World Cup Groups</Link>
           </li>
         </ul>
       </div>

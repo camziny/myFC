@@ -11,9 +11,12 @@ import TeamsList from "./TeamsList";
 import PlayersListPage from "./PlayersListPage";
 import TeamsShowPage from "./TeamsShowPage";
 import SquadsList from "./SquadsList.js";
-import SquadShowPage from "./SquadShowPage.js"
-import { Link } from "react-router-dom"
+import SquadShowPage from "./SquadShowPage.js";
+import { Link } from "react-router-dom";
 import AssignmentShowPage from "./AssignmentShowPage";
+import WorldCupTeamsList from "./WorldCupTeamsList";
+import WorldCupTeamsShowPage from "./WorldCupTeamsShowPage";
+import WorldCupStandings from "./WorldCupStandings";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -36,11 +39,15 @@ const App = (props) => {
       <Switch>
         <Route exact path="/">
           <div className="homeHeader">
-          <div className="icon text-center">
-          <Link to="/squads">
-            <img className="home-backgroundImage"src="https://cdn.freelogodesign.org/files/31506640979849029e138aa454d48f51/thumb/logo_200x200.png?v=0" alt=""/>
-          </Link>
-          </div>
+            <div className="icon text-center">
+              <Link to="/squads">
+                <img
+                  className="home-backgroundImage"
+                  src="https://cdn.freelogodesign.org/files/31506640979849029e138aa454d48f51/thumb/logo_200x200.png?v=0"
+                  alt=""
+                />
+              </Link>
+            </div>
           </div>
         </Route>
         <Route exact path="/squads">
@@ -49,6 +56,9 @@ const App = (props) => {
         <Route exact path="/teams" component={TeamsList} />
         <Route exact path="/teams/:id" component={TeamsShowPage} />
         <Route exact path="/players" component={PlayersListPage} />
+        <Route exact path="/worldCupTeams" component={WorldCupTeamsList} />
+        <Route exact path="/worldCupTeams/:id" component={WorldCupTeamsShowPage} />
+        <Route exact path="/worldCupStandings" component={WorldCupStandings} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <Route exact path="/assignments/:id" component={AssignmentShowPage} />
